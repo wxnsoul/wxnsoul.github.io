@@ -246,7 +246,46 @@
         </center>
     </div>
     <div class="content-article">
-        <p>阿迪斯</p>
+        <p>定义:序列化是将对象的状态信息转换为可以存储或传输的形式的过程 代码为： <code>serialize ( mixed $value )</code><br>反序列化则相反，代码为：<code>unserialize ( string $str )</code><br>如果只是这样，那么应该没有什么可以利用的漏洞。<br>然而，<code>serialize ( mixed $value )</code>与<code>unserialize ( string $str )</code>这两个函数在使用时，会自动使用一些魔法函数，以及，如果在定义的类内存在魔法函数，也会自动调用</p>
+<p><font color="red">也就是说,序列化与反序列化必须要配合一些魔法函数才能发挥作用</font></p>
+<p>反序列化即逆过程，由字节流还原成对象。Java中的ObjectOutputStream类的writeObject()方法可以实现序列化，类ObjectInputStream类的readObject()方法用于反序列化。下面是将字符串对象先进行序列化，存储到本地文件，然后再通过反序列化进行恢复<br>问题在于，如果Java应用对用户输入，即不可信数据做了反序列化处理，那么攻击者可以通过构造恶意输入，让反序列化产生非预期的对象，非预期的对象在产生过程中就有可能带来任意代码执行。<br>所以这个问题的根源在于类ObjectInputStream在反序列化时，没有对生成的对象的类型做限制；假若反序列化可以设置Java类型的白名单，那么问题的影响就小了很多。<br>反序列化问题由来已久，且并非Java语言特有，在其他语言例如PHP和Python中也有相似的问题。</p>
+<ul>
+<li><h2>函数介绍</h2></li>
+</ul>
+<ol>
+<li><h3 id="变量-FILE"><a href="#变量-FILE" class="headerlink" title="变量  FILE"></a>变量  <strong>FILE</strong><br></h3><p>这是用于返回当前访问得文件得目录的<br><br><img src="https://github.com/wxnsoul/images/blob/master/__FILE__.jpg?raw=true" alt="没屌用??"></p>
+</li>
+<li><h3 id="show-source-函数"><a href="#show-source-函数" class="headerlink" title="show_source()函数###"></a>show_source()函数<br>###</h3><p>用于显示页面源代码的,括号中填路径,配合<strong>FILE</strong>使用就是显示当前页面的源代码<br><br><img src="https://github.com/wxnsoul/images/blob/master/show_resource.jpg?raw=true" alt="木得了"></p>
+</li>
+<li><h3 id="魔法函数-toString"><a href="#魔法函数-toString" class="headerlink" title="魔法函数__toString###"></a>魔法函数__toString<br>###</h3><p><img src="https://github.com/wxnsoul/images/blob/master/__toString.jpg?raw=true" alt=""><br>__toString()  是魔术方法的一种，<font color="red">具体用途是当一个对象被当作字符串对待的时候，会触发这个魔术方法</font><br><br>以下说明摘自PHP官方手册<br>public string __toString ( void )<br>__toString() 方法用于一个类被当成字符串时应怎样回应。例如 echo $obj; 应该显示些什么。此方法必须返回一个字符串，否则将发出一条 E_RECOVERABLE_ERROR 级别的致命错误。<br><br>Warning<br>不能在 __toString() 方法中抛出异常。这么做会导致致命错误。</p>
+</li>
+</ol>
+<p>*<br>输出字符串时是不会触发的,把类当字符串输出才会触发*<br></p>
+<ol start="4">
+<li>###其余常用的魔法函数<br>###<br><img src="https://github.com/wxnsoul/images/blob/master/magic_method.jpg?raw=true" alt=""> </li>
+</ol>
+<h2 id="writeup题解"><a href="#writeup题解" class="headerlink" title="writeup题解"></a>writeup题解</h2><ul>
+<li><img src="https://github.com/wxnsoul/images/blob/master/source_code.png?raw=true" alt=""></li>
+</ul>
+<p>这是题目的源码,很明显是代码审计<br><br>第一行可以得知flag在./flag.php中<br><br>访问一下什么也没有,检查源代码也没有.<font color="red">这说明服务器端的php代码并没有输出值.需要用到show_resource才能看到flag</font></p>
+<ul>
+<li>思路<br>Highlight_file(,true)就是确认开启代码高亮<br>引用了一个魔术方法<strong>toString,检测到把类当初字符串输出后就会会把readme.txt和$this-&gt;source拼接在一起输出.源码中赋值的是</strong>FILE__所以这个页面会输出源码,如果我们把source的赋值变成flag.php把岂不是也能输出flag了?<br><br>而全文就只有一个输出类的地方似乎就是检测get传参的那边.他会把当前文件的路径名传给resource变量然后输出.但其实还有一个输出的点,那就是<?=$todo?><br><?=$todo?>就相当于echo $tode<br></li>
+</ul>
+<p>这里很明显是把数组todos遍历输出<br><br>在cookie传参的时候会有用到todos,会把m反序列化之后传给todos,但是这时候的todos并不是数组,所以只要强行给m值加上一个中括号,这样todos就变成了一个数组<br>变量S是已经无法修改了只能是赋值<strong>FILE</strong>,所以得在另外一个输出点下手.<br>Cookie判断里,substr($a,32)和substr($a,0,32)前者是从$a第32位之后开始取值,后者是取值前32.<br></p>
+<p>&nbsp</p>如果h=md5(m)就会给todos赋值,c是我们可以控制的,这说明c应该是由md5(m).m构成,这样就变成了md5(m)==md5(m),而m会被反序列化,说明c的后32位应该先序列化.只要把我们想要的flag.php序列化,然后给m,todos输出就会得到源码.但是todos必须是数组才会输出,所以得给readme对象再加一个[],然后再去序列化
+
+<p><img src="https://github.com/wxnsoul/images/blob/master/1.png?raw=true" alt=""><br>这里的a指数组,i指第几个元素,0就是第零个<hr><br><font color="red">这里的序列化是非常的关键的!!!必须使用readme类,source变量!!!这样反序列化之后就相当于给这个类的source复制成自己想要的了!  <?=todo?>的时候就能输出源码了<br>因为只有readme类里面才有这个__toString函数!这个函数也只输出source变量的源码!</font><br><br>我们把序列化之后的字符串md5加密,得到<code>e2d4f7dcc43ee1db7f69e76303d0105c</code>把他们拼接在一起得到<code>e2d4f7dcc43ee1db7f69e76303d0105ca:1:{i:0;O:6:&quot;readme&quot;:1:{s:6:&quot;source&quot;;s:8:&quot;flag.php&quot;;}}</code>,todos就能执行foreach,在cookie中被反序列化后就是一个有着信息的数组类,在foreach中输出.就会触发toString.这边有个小提示,cookie传参和get传参一样,是会先进行url编码的,所以得先编码再传参cookie,用burp抓包修改.<br>    e2d4f7dcc43ee1db7f69e76303d0105ca%3a1%3a%7bi%3a0%3bO%3a6%3a%22readme%22%3a1%3a%7bs%3a6%3a%22source%22%3bs%3a8%3a%22flag.php%22%3b%7d%7d</p>
+<p>紧接着抓包修改页面,把cookie值改成上面一串,成功得到flag<br><br><img src="https://github.com/wxnsoul/images/blob/master/2.png?raw=true" alt=""></p>
+<h2 id="总结cookie传过去之后的流程"><a href="#总结cookie传过去之后的流程" class="headerlink" title="总结cookie传过去之后的流程:"></a>总结cookie传过去之后的流程:</h2><ul>
+<li><img src="https://github.com/wxnsoul/images/blob/master/source_code.png?raw=true" alt=""></li>
+</ul>
+<ol>
+<li>if(isset($COOKIE[‘todos’]))接收到cookie里的todos传参,为真进入if判断<br></li>
+<li>然后把todos值赋给了$c,$h接收了$c的前32位,$m接收了$c的从第33位到结束所有的<br></li>
+<li>把$m md5加密后与$h比较发现是一样的,就将$m反序列化,此时得到的就是[$readme],它是一个数组,数组中是一个readme对象,source的值是flag.php</li>
+<li>因为没有get,post传参所以直接往下执行,直接遍历输出todos,输出readme类之后就会触发__toString魔术方法,自动输出该方法里的source页面的代码,和readme.txt拼接在一起后输出</li>
+<li>得到了flag</li>
+</ol>
 
     </div>
 </article>
@@ -375,7 +414,7 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.856980514140588px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.800772551237651px;" class="tag-cloud-link">序列化与反序列化</a>
     
 </div>
                 
