@@ -10,7 +10,7 @@
     
     
     
-    <title>tags: 博客学习 | 伏诗</title>
+    <title>SQL语句--空值及其处理 | 伏诗</title>
     <link href="http://wxnsoul.github.io" rel="prefetch" />
 
     
@@ -209,19 +209,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-tag">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="http://wxnsoul.github.io">伏诗</a>
         >
-        <span>标签</span>
+        <span>SQL语句--空值及其处理</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html">博客学习</a>
+                <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/">SQL语句--空值及其处理</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/SQL-DDL/">SQL-DDL</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2020-04-02
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -229,24 +244,38 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html">博客学习</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/">SQL语句--空值及其处理</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2020-04-02
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/SQL-DDL/">SQL-DDL</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
-            <br>
-            
-            <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <h2 id="什么是空值"><a href="#什么是空值" class="headerlink" title="什么是空值"></a>什么是空值</h2><ul>
+<li>空值从技术上来说就是“未知的值”。但空值并不包括零、一个或者多个空格组成的字符串、以及零长度的字符串.</li>
+</ul>
+<h2 id="检测空值"><a href="#检测空值" class="headerlink" title="检测空值"></a>检测空值</h2><ul>
+<li>因为空值是代表未知的值，所以并不是所有的空值都相等。例如student表中有两个学生的出生日期未知，但无法证明这两个学生的年龄相等。这样就不能用“=”运算符来检测空值。所以T-SQL引入了一个特殊的操作符IS来检侧特殊值之间的等价性。检测空值的使用语法如下：<br> <code>WHERE 表达式 IS NULL</code><br><br>检测非空值的使用语法如下：<br><br> <code>WHERE 表达式 IS NOT NULL</code><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/mvULpyJ5dNRt.png?imageslim" alt="mark"></li>
+</ul>
+<h2 id="处理空值"><a href="#处理空值" class="headerlink" title="处理空值"></a>处理空值</h2><ul>
+<li>为了将空值转换为一个有效的值，以便于对数据理解，或者防止表达式出错。SQL Server专门提供了ISNULL函数将空值转换为有效的值，其使用语法格式如下：<br><br> <code>ISNULL(check_expr,repl_value</code>）<br><br>其中，check_expr是指被检查是否为NULL的表达式，可以是任何数据类型。repl_value是在check_expr为NULL时用其值替换NULL值，需与check_expr具有相同的类型。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/8D4zNUUgfraz.png?imageslim" alt="mark"><br>就像replace函数</li>
+</ul>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -424,17 +453,17 @@
 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -442,11 +471,11 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/SQL-DDL/" style="font-size: 9.979182210860365px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 16.22422434619398px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 15.835563403143519px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 18.39203898153312px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 18.029030342901105px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 15.778006802411065px;" class="tag-cloud-link">序列化与反序列化</a>
     
 </div>
                 

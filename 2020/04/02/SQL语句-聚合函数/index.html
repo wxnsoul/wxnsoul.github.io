@@ -10,7 +10,7 @@
     
     
     
-    <title>tags: 博客学习 | 伏诗</title>
+    <title>SQL语句--聚合函数 | 伏诗</title>
     <link href="http://wxnsoul.github.io" rel="prefetch" />
 
     
@@ -209,19 +209,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-tag">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="http://wxnsoul.github.io">伏诗</a>
         >
-        <span>标签</span>
+        <span>SQL语句--聚合函数</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html">博客学习</a>
+                <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/">SQL语句--聚合函数</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/SQL-DDL/">SQL-DDL</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2020-04-02
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -229,24 +244,65 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html">博客学习</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/">SQL语句--聚合函数</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2020-04-02
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/SQL-DDL/">SQL-DDL</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
-            <br>
-            
-            <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <h1 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h1><ul>
+<li>聚合函数实现数据统计等功能，用于<font color="red">对一组值进行计算并返回一个单一的值</font>，除COUNT函数外，聚合函数忽略空值。聚合函数常与SELECT语句的GROUP BY子句一起使用。</li>
+</ul>
+<p>#常用的聚合函数#</p>
+<ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/ih8Tke8m8pav.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="聚合参数得一般格式"><a href="#聚合参数得一般格式" class="headerlink" title="聚合参数得一般格式"></a>聚合参数得一般格式</h1><ul>
+<li>其中，ALL表示对所有值进行聚合函数运算，它是默认值；DISTINCT指定每个唯一值都被考虑；expr指定进行聚合函数运算的表达式。 </li>
+</ul>
+<p>举例</p>
+<ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/XhAiVHfDju68.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="作用范围"><a href="#作用范围" class="headerlink" title="作用范围"></a>作用范围</h1><ul>
+<li>通常一个聚合函数的范围是满足WHERE子句指定的条件的所有记录。在加上GROUP BY子句后，SQL命令把查询结果按指定列分成集合组。<font color="red">当一个聚合函数和一个GROUP BY子句一起使用时，聚合函数的范围变成为每组的所有记录。换句话说，一个结果是由组成一组的每个记录集合产生的。</font><br><br>使用HAVING子句可以对这些组进一步加以控制。用这一子句定义这些组所必须满足的条件，以便将其包含在结果中。<br>当WHERE子句、GROUP BY子句和HAVING子句同时出现在一个查询中时，SQL的执行顺序如下：<br></li>
+</ul>
+<ol>
+<li>执行WHERE子句，从表中选取行。</li>
+<li>由GROUP BY对选取的行进行分组。</li>
+<li>执行聚合函数。</li>
+<li>执行HAVING子句选取满足条件的分组。</li>
+</ol>
+<h1 id="聚合函数-AS"><a href="#聚合函数-AS" class="headerlink" title="聚合函数:AS"></a>聚合函数:AS</h1><ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/JNAhsHLUV0oA.png?imageslim" alt="mark"><br><br>说一说这个as得作用,第一列得值是课程号,因为select 课程号,但是第二列是一个聚合函数,所以需要as来做一个别名<br><br>再来说聚合函数max得作用,就像上面说的,聚合函数得范围由所有得变为每组得所有记录,也就是说它先去找3-105这一组里面得最高分,再去找3-245,以此类推,从而达到了寻找每一门课得最高分要求</li>
+</ul>
+<h1 id="group-by子句"><a href="#group-by子句" class="headerlink" title="group by子句"></a>group by子句</h1><ul>
+<li><font color="red">GROUP BY子句用来为结果集中的每一行产生聚合值。如果聚合函数没有使用GROUP BY子句，则只为SELECT语句报告一个聚合值。</font>指定GROUP BY时，选择列表中任一非聚合表达式内的所有列都应包含在GROUP BY列表中，或者GROUP BY表达式必须与选择列表表达式完全匹配。<br></li>
+</ul>
+<ul>
+<li><font color="red">简单地说就是不使用group by就对整个结果集做聚合函数运算,用了就按组划分,做聚合函数运算</font></li>
+</ul>
+<h1 id="HAVING子句"><a href="#HAVING子句" class="headerlink" title="HAVING子句"></a>HAVING子句</h1><ul>
+<li>在SELECT查询中，在给定分组GROUP BY子句后，可以通过HAVING子句中使用聚合函数来进行分组条件判断。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/YPEHh1QBECsV.png?imageslim" alt="mark"><br>就是说使用了group by需要用到聚合函数作为筛选条件,就得用having.<br><font color="red">并且,使用聚合函数返回得值应该是唯一得!!!</font><br>  select cnum,score as ‘及格以上’ from score group by cnum having min(score)&gt;=60<br>我在自己得数据库中这样写尝试找出所有最低分大于60得学生得学号和所有分数.这样是错的!因为返回得学号都是单一得,但是所有大于60得科目肯定不止一课!不是唯一值!!<br><br>只能这么改<code>select cnum from score group by cnum having min(score)&gt;=60</code><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/PPaunAn2jxQT.png?imageslim" alt="mark"><br>找出最低分&gt;60得学生得学号,肯定是单一的</li>
+</ul>
+<h1 id="总结要点"><a href="#总结要点" class="headerlink" title="总结要点"></a>总结要点</h1><p>当一个聚合函数和一个GROUP BY子句一起使用时，聚合函数的范围变成为每组的所有记录。换句话说，一个结果是由组成一组的每个记录集合产生的。<br><br>并且,使用聚合函数返回得值应该是唯一得!!!对一组值进行计算并返回一个单一的值!!!</p>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -424,17 +480,17 @@
 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -442,11 +498,11 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/SQL-DDL/" style="font-size: 9.979182210860365px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 11.712918295573324px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 15.835563403143519px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 16.249203097895748px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 18.029030342901105px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 17.542597536184736px;" class="tag-cloud-link">序列化与反序列化</a>
     
 </div>
                 

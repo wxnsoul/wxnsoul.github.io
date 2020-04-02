@@ -10,7 +10,7 @@
     
     
     
-    <title>tags: 博客学习 | 伏诗</title>
+    <title>SQL语句--连接查询 | 伏诗</title>
     <link href="http://wxnsoul.github.io" rel="prefetch" />
 
     
@@ -209,19 +209,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-tag">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="http://wxnsoul.github.io">伏诗</a>
         >
-        <span>标签</span>
+        <span>SQL语句--连接查询</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html">博客学习</a>
+                <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">SQL语句--连接查询</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/SQL-DDL/">SQL-DDL</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2020-04-02
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -229,24 +244,67 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html">博客学习</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">SQL语句--连接查询</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2020-04-02
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/SQL-DDL/">SQL-DDL</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
-            <br>
-            
-            <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <h1 id="1-简单连接查询"><a href="#1-简单连接查询" class="headerlink" title="1.简单连接查询"></a>1.简单连接查询</h1><ul>
+<li>在一个查询中，当需要对两个或多个表连接时，可以指定连接列，在WHERE子句中给出连接条件，在FROM子句中指定要连接的表，其格式如下：<br></li>
+</ul>
+<p><code>SELECT 列名1，列名2，… 
+FROM 表1，表2，…
+WHERE 连接条件</code> <br></p>
+<p>对于连接的多个表通常存在公共列，为了区别是哪个表中的列，在连接条件中通过表名前缀指定连接列。<br><br>例如，“teacher.编号”表示teacher表的编号列，“student.学号”表示student表的学号列，由此来区别连接列所在的表。</p>
+<h2 id="1-等值连接"><a href="#1-等值连接" class="headerlink" title="(1)等值连接"></a>(1)等值连接</h2><ul>
+<li>所谓等值连接，是指表之间通过“等于”关系连接起来，产生一个连接临时表，然后对该临时表进行处理后生成最终结果。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/I5Gfz95Ccocc.png?imageslim" alt="mark"></li>
+</ul>
+<h2 id="2-非等值连接"><a href="#2-非等值连接" class="headerlink" title="(2)非等值连接"></a>(2)非等值连接</h2><ul>
+<li>所谓非等值连接，是指表之间的连接关系不是“等于”，而是其他关系。<br>通过指定的非等值关系将两个表连接起来的，产生一个连接临时表，然后对该临时表进行处理后生成最终结果。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/LWHtYtx6qa6E.png?imageslim" alt="mark"><br>就比如这个between and</li>
+</ul>
+<h2 id="3-自连接"><a href="#3-自连接" class="headerlink" title="(3)自连接"></a>(3)自连接</h2><ul>
+<li>在数据查询中有时需要将同一个表进行连接，这种连接称之为自连接，进行自连接就如同两个分开的表一样，可以把一个表的某行与同一表中的另一行连接起来。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/4SvCp0BpSGSh.png?imageslim" alt="mark"></li>
+</ul>
+<p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/6sSN05JVKVvj.png?imageslim" alt="mark"><br>这个自连接就是自己和自己连接比较,所以需要用到x,y来区分</p>
+<h1 id="复杂连接查询"><a href="#复杂连接查询" class="headerlink" title="复杂连接查询"></a>复杂连接查询</h1><ul>
+<li>在SELECT的FROM子句中指定连接条件，有助于将这些连接条件与WHERE子句中可能指定的其他搜索条件分开，其连接语法如下：<br>  FROM 第一个表名 连接类型 第二个表名 [ON (连接条件)]<br><br>根据连接条件分为内连接、外连接和交叉连接等复杂连接查询类型<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/dxMs2TJbwbRW.png?imageslim" alt="mark"><br>举例:<br><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/IwBiiUAsgTAz.png?imageslim" alt="mark"></li>
+</ul>
+<p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/E8vSY7PhsyF4.png?imageslim" alt="mark"></p>
+<p>其实就是取交集得意思</p>
+<h2 id="2-外连接"><a href="#2-外连接" class="headerlink" title="(2)外连接"></a>(2)外连接</h2><p>   外连接会返回FROM子句中提到的至少一个表或视图的所有行，只要这些行符合任何WHERE或HAVING搜索条件。<br>外连接检索通过左外连接引用的左表的所有行，以及通过右外连接引用的右表的所有行,而全外连接中两个表的所有行都将返回。</p>
+<ol>
+<li>LEFT OUTER JOIN或LEFT JOIN（左外连接）</li>
+<li>RIGHT OUTER JOIN或RIGHT JOIN（右外连接）</li>
+<li>FULL OUTER JOIN或FULL JOIN（全外连接）</li>
+</ol>
+<h2 id="3-左外连接"><a href="#3-左外连接" class="headerlink" title="(3)左外连接"></a>(3)左外连接</h2><ul>
+<li>左外连接简称为左连接，其结果包括第一个表（“左”表，出现在JOIN子句的最左边）中的所有行，不包括右表中的不匹配行。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/s4PU2ocobsTP.png?imageslim" alt="mark"><br>举例:<br><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/9M5sk2SnODqd.png?imageslim" alt="mark"><br>说白了就是1-5是内连接得结果,6是把左表不满足条件得也加进来(会显示null)</li>
+</ul>
+<h2 id="4-右外连接"><a href="#4-右外连接" class="headerlink" title="(4)右外连接"></a>(4)右外连接</h2><ul>
+<li>右外连接简称为右连接，其结果中包括第二个表（“右”表，出现在JOIN子句的最右边）中的所有行，不包括左表中的不匹配行。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/QrWUaEJhOI6h.png?imageslim" alt="mark"></li>
+</ul>
+<p>举例:<br><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/Q2caEh43gy31.png?imageslim" alt="mark"></p>
+<h2 id="5-全外连接"><a href="#5-全外连接" class="headerlink" title="(5)全外连接"></a>(5)全外连接</h2><p>若要通过在连接结果中包括不匹配的行保留不匹配信息，可以使用全外连接。SQL Server提供全外连接运算符FULL OUTER JOIN，不管另一个表是否有匹配的值，此运算符都包括两个表中的所有行。</p>
+<p>举例:<br><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/xp1nj7fodeId.png?imageslim" alt="mark"><br>这就是左右外连接得结合其实</p>
+<h2 id="6-交叉连接"><a href="#6-交叉连接" class="headerlink" title="(6)交叉连接"></a>(6)交叉连接</h2><p>在这类连接的结果集内，两个表中每两个可能成对的行占一行。交叉连接不使用WHERE子句。<br> <br>在数学上，就是表的笛卡尔积。第一个表的行数乘以第二个表的行数等于笛卡尔积结果集的大小。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200402/e4TYVh4iyoKQ.png?imageslim" alt="mark"><br>笛卡儿积</p>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -424,17 +482,17 @@
 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -442,11 +500,11 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/SQL-DDL/" style="font-size: 9.979182210860365px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 13.453736165219619px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 15.835563403143519px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 10.404910088645202px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 18.029030342901105px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13.146080733487402px;" class="tag-cloud-link">序列化与反序列化</a>
     
 </div>
                 
