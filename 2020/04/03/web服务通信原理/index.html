@@ -10,7 +10,7 @@
     
     
     
-    <title>categories: 博客学习 | 伏诗</title>
+    <title>web服务通信原理 | 伏诗</title>
     <link href="http://wxnsoul.github.io" rel="prefetch" />
 
     
@@ -213,19 +213,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-category">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="http://wxnsoul.github.io">伏诗</a>
         >
-        <span>目录</span>
+        <span>web服务通信原理</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html">博客学习</a>
+                <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web服务通信原理</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web通信原理</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2020-04-03
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -233,24 +248,78 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html">博客学习</a>
+                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web服务通信原理</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2020-04-03
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web通信原理</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
-            <br>
-            
-            <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <ul>
+<li>zkaq的课程基本学的差不多了,到这里的时候基本还剩一丢丢部分还没有学习了,waf放入绕过和实战讲解.我不想过于着急去看实战了,毕竟基础不好的话看了等于浪费,于是打算把前面的知识点都复习回顾一边<br></li>
+</ul>
+<h1 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h1><ul>
+<li>ip就是指地址,ip又分为公网地址和内网地址.比如说自己虚拟机里的ipv4地址,本机的ipv4地址,就是内网地址.<br><br>比如你家的门牌号那就是个公网地址，X省X市X街道X号，别人看到这个地址就能找到你家<br><br>内网地址是什么妮，假设你住的是-一个大楼，比如住401房间，那么只有同一个大楼里面的人才能够通过401这个地址找到你的房间吧。其他人根本不知道是哪里的401房间对吧<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200403/ndgWWG4yHngp.png?imageslim" alt="mark"></li>
+</ul>
+<ul>
+<li>所以说公网比内网要更加精确,他能直接找到你在哪.内网只是在知道你在哪后继续划分你在这里的具体哪里.<br><br><font color="red">前面说到了路由器是划分内网地址的,所以自己本机里的IP地址千万不要以为是公网地址.那么如何查看自己的公网地址呢?直接百度搜索ip就可以了.</font><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200403/eQpsKi7TbzXD.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="C段"><a href="#C段" class="headerlink" title="C段"></a>C段</h1><ul>
+<li>前面三个值相同,最后一个事0-255就是c段<br>如:114.114.114.0和114.114.114.255</li>
+</ul>
+<h1 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h1><ul>
+<li>实际上是为了方便记忆所发明的一个字符串标识<br>DNS:讲域名转化为ip的一个协议(对应内容找相应的服务器)因为让你直接去记一个公网ip,去访问,肯定是比较费脑子的.但是你使用域名代替之后,比如<a href="http://www.baidu.com就会很方便的记住了" target="_blank" rel="noopener">www.baidu.com就会很方便的记住了</a><br><br>域名等级:有几个点间隔就是几级,联系是二级域名是依附在顶级域名之上的,顶级域名可以扶持N个二级域名</li>
+</ul>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><ul>
+<li><strong><em>上面访问域名为什么会访问到对应的ip呢?这就是因为DNS解析协议了.它就是把域名转化成对应的ip地址,然后去访问相应的服务器.</em></strong><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200403/4JckFCRc50vd.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h1><ul>
+<li>端口是什么呀?<br><font color="red">端口就像电脑的接口，像USB接口，比如你需要用键盘时候，你要把键盘插入接口，端口就是类似的<br>东西，端口主要是网络接口，比如你去访问别人网站，一般来说你实际上是去他的80端口进行通信。</font><br>我们有多少个端口妮?<br>有范围是从0到65535 (2^16-1)<br>0端口是预留端口。一般不会用到</li>
+</ul>
+<h1 id="cookie-不安全"><a href="#cookie-不安全" class="headerlink" title="cookie(不安全)"></a>cookie(不安全)</h1><ul>
+<li>是服务器给你的代表你身份的一串字符串.为了提升用户体验的,但是越便捷的东西越不安全</li>
+</ul>
+<h1 id="web容器"><a href="#web容器" class="headerlink" title="web容器"></a>web容器</h1><ul>
+<li>是可以向发出请求的浏览器提供文档的程序(其实我们访问IP时访问到的就是web容器)(是一个被动的程序)<br>常见的web容器:IIS(WINDOWS)Apache(全平台)Nginx(全平台)Tomcat<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200403/spwMUHwjbiJW.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="动态语言"><a href="#动态语言" class="headerlink" title="动态语言"></a>动态语言</h1><ul>
+<li>定义:是对服务器行为的编程,这被称为服务器脚本或服务器端脚本<br>作用:</li>
+</ul>
+<ol>
+<li>动态地向web页面编辑、改变或添加任何的内容</li>
+<li>对由HTML表单提交的用户请求或数据进行响应</li>
+<li>访问数据或数据库，并向浏览器返回结果</li>
+<li>为不同的用户定制页面</li>
+<li>提高网页安全性，使您的网页代码不会通过浏览器被查看到<br>常见的服务器脚本:<br><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200403/QAEb9wSRaegx.png?imageslim" alt="mark"></li>
+</ol>
+<h1 id="搭建一个网站"><a href="#搭建一个网站" class="headerlink" title="搭建一个网站"></a>搭建一个网站</h1><ul>
+<li></li>
+</ul>
+<ol>
+<li>安装web容器(Apache)</li>
+<li>安装静态语言(PHP)</li>
+<li>安装数据库(Mysql)<br><br>嫌弃麻烦,所以有人出了集成,如宝塔,phpstudy(php5.4.45+Apache用的比较多)  其中index.php是默认的根目录</li>
+</ol>
+<h1 id="动手搭建实践碰到的问题"><a href="#动手搭建实践碰到的问题" class="headerlink" title="动手搭建实践碰到的问题"></a>动手搭建实践碰到的问题</h1><ul>
+<li>1.重新回顾视频得时候发现原来可以通过主机来访问虚拟机得IP地址,但是ping虚拟机却一直不能成功,原因是没有关闭虚拟机里的两个防火墙</li>
+</ul>
+<p>2.勾取允许目录列表之后却不能访问到目录,原因是没有把l.php给删掉.(l.php就是探针,更目录下的默认访问页面,就像打开phpmyadmin一样index是默认页面)<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200403/wx2cgJ1Eg1KG.png?imageslim" alt="mark"><br>在conf里面得vhost可以改配置文件<br>3.增加新的站点时尝试过多次后发现,根目录不可以用于网页地址,如单单的一个E:,或者C:<br>4.后期发现sql服务会占用8080端口,所以自己不在本机装phpstudy了,关闭服务都嫌弃麻烦</p>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -428,17 +497,17 @@
 
                 
                 <li>
-                    <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -446,13 +515,13 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/SQL-DDL/" style="font-size: 16.434371536304237px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 16.334543545595572px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 10.883487477080706px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.669424990862804px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 10.32244789545086px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 12.42489368805629px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 18.414890033116944px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 18.387657003779093px;" class="tag-cloud-link">web通信原理</a>
     
 </div>
                 
