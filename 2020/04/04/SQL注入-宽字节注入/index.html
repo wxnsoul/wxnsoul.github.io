@@ -183,11 +183,11 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
+                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
+                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
                         </li>
                         
                         
@@ -235,6 +235,13 @@
         <div class="tag-article">
             
             <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
+                
+            </span>
+            
+            <span class="label label-gal">
                 <i class="fa fa-calendar"></i> 2020-04-04
             </span>
             
@@ -253,12 +260,32 @@
             </p>
             <p>
                 
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
+                
+                
                 
             </p>
         </center>
     </div>
     <div class="content-article">
-        
+        <h1 id="magic-quotes-gpc魔术引号"><a href="#magic-quotes-gpc魔术引号" class="headerlink" title="magic_quotes_gpc魔术引号"></a>magic_quotes_gpc魔术引号</h1><ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/NW0fjGNt4UQK.png?imageslim" alt="mark">$sql = ‘ select* from admin where username=&#39;‘.$REQUEST [ ‘ username’] .’&#39; and password =&#39;‘.$REQUEST [ ‘ password’ ]<br><br>这是一个标准的sql语句,没有做过任何过滤<br><br>所以使用万能密码很容易实现注入,使用魔术引号之后呢,就会自动在单引号,双引号,反斜杠之前自动加一个反斜杠(PHP5.4以后就取消了这个功能,可以在php.ini中查看是否开启)<br><br>单引号和双引号内的一切都是字符串，那我们输入的东西如果不能闭合掉单引号和双引号，我们的输入就不会当作代码执行，就无法产生SQL注入，那我们该怎么办?</li>
+</ul>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/M8kqWR7o6Be7.png?imageslim" alt="mark">)5.4以下的php中的php.ini文件中默认打开这个功能,此时要是传入’”/就i会发生这样的事情<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/wWk7wvnRl2io.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="GBK编码格式"><a href="#GBK编码格式" class="headerlink" title="GBK编码格式"></a>GBK编码格式</h1><ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/Sxk6gvevfTvB.png?imageslim" alt="mark">Gbk编译的汉字占用两个字节,但是utf-8编译的汉字占用三个字节<br><br>什么是url编码?其实就是十六进制编码,会把输入的十六进制转换成十进制然后对应ASCII码输出.比如%27转换成十进制就是39,对应的ascii就是单引号</li>
+</ul>
+<h1 id="宽字节注入原理"><a href="#宽字节注入原理" class="headerlink" title="宽字节注入原理"></a>宽字节注入原理</h1><ul>
+<li>魔术引号把用户输入的单引号变成\’之后,如果数据库编码不是utf-8编码就可能造成宽字节注入.因为\的url编码是%5c,是占用一个字节的,如果用户输入%df’就会变成%df%5c从而组成一个双字节汉字’運’从而是的魔术引号加的/失效<br><br>注意,只有get传参和cookie传参的时候在地址栏输入的参数才会被url编码,如果是post传参,基本上不可能被url编码先编译.所以如果是post传参,<strong><em>可以使用burp抓包后修改十六进制文件,或者是直接在表单中输入  汉’</em></strong>,也可以成功.<strong><em>因为utf-8编码中中文是三个字节的,加上’就是四个字节,到了GBK的数据库中就会变成两个中文字符</em></strong><br>如果使用sqlmap去跑,需要手动去闭合一些东西后再加*,毕竟是工具,比较呆<br>示例:<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/IqLVLPWgkkb0.png?imageslim" alt="mark">加了%df之后多出的β就会和/一起再数据库中组成一个汉字,从而实现了绕过</li>
+</ul>
+<h1 id="靶场实战"><a href="#靶场实战" class="headerlink" title="靶场实战"></a>靶场实战</h1><ul>
+<li>传送地址:<a href="https://wxnsoul.github.io/2020/04/04/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">https://wxnsoul.github.io/2020/04/04/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/</a></li>
+</ul>
+
     </div>
 </article>
 
@@ -319,6 +346,18 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/04/04/access%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">access注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/">数据库注入--Access注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/04/04/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">宽字节注入--zkaq靶场</a>
                 </span>
             </li>
@@ -365,18 +404,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/03/Get%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">Get注入--zkaq靶场</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -395,37 +422,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/POST%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">POST注入--zkaq靶场</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/">SQL语句--空值及其处理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web服务通信原理</a>
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
                 </span>
             </li>
             
@@ -443,13 +446,37 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/04/03/zkaq-web%E5%AE%89%E5%85%A8%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/">zkaq--web安全前端基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/04/01/zkaq-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">zkaq--序列化与反序列化</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">宽字节注入--zkaq靶场</a>
+                    <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/%E7%9B%B2%E6%B3%A8-zkaq%E9%9D%B6%E5%9C%BA/">盲注--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/">数据库注入--Access注入</a>
                 </span>
             </li>
             
@@ -482,25 +509,29 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 13.941984590095394px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 17.511501903734196px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 8.707137535208092px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 8.164232051270744px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 11.93153924888348px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 16.062656492427553px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 18.27068833904356px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 18.514079539844204px;" class="tag-cloud-link">SQL注入--盲注</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 8.887188342378025px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 9.02570726915226px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 18.593399748401104px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 18.56381952545088px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.82340796206771px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access/" style="font-size: 16.539472951938688px;" class="tag-cloud-link">数据库注入--Access</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 12.298607832868436px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 10.70471300983171px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 15.55270707922815px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 17.31366579895857px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 11.458418418218677px;" class="tag-cloud-link">SQL注入--盲注</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.87759150786452px;" class="tag-cloud-link">序列化与反序列化</a>
+    
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 17.814174205118313px;" class="tag-cloud-link">博客学习</a>
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/" style="font-size: 8.320429950207505px;" class="tag-cloud-link">数据库注入--Access注入</a>
     
 </div>
                 
