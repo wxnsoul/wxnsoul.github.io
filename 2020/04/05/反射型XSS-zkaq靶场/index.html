@@ -179,15 +179,15 @@
                         
                         
                         <li>
+                            <a href="/tags/CSRF/">CSRF</a>
+                        </li>
+                        
+                        <li>
                             <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/">Mssql注入--反弹注入</a>
+                            <a href="/tags/Dom-Based-XSS/">Dom Based XSS</a>
                         </li>
                         
                         
@@ -271,13 +271,16 @@
     </div>
     <div class="content-article">
         <h1 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h1><ul>
-<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/YNh3CsjfcMNv.png?imageslim" alt="mark"><br>这边有输入框就直接尝试输入<script>alert(1)</script>回车后发现上面也会出现一行没有找到…结果,查看源码<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/bUaVlHalaAA0.png?imageslim" alt="mark">)可以发现上面的尖括号是被过滤了的,<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/yE66KKunFLzm.png?imageslim" alt="mark"><br>但是这个提交框的没有.肯定选择从提交框入手.这次注意闭合重新尝试<code>&quot;&lt;script&gt;alert(1)&lt;/script&gt;//</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/DTduV7Fw64iJ.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/CJ6NM7BMqO1H.png?imageslim" alt="mark">查看源码可惜发现双引号被转移了.</li>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/YNh3CsjfcMNv.png?imageslim" alt="mark"><br>这边有输入框就直接尝试输入<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>回车后发现上面也会出现一行没有找到…结果,查看源码<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/bUaVlHalaAA0.png?imageslim" alt="mark">)可以发现上面的尖括号是被过滤了的,<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/yE66KKunFLzm.png?imageslim" alt="mark"><br>但是这个提交框的没有.肯定选择从提交框入手.这次注意闭合重新尝试<code>&quot;&lt;script&gt;alert(1)&lt;/script&gt;//</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/DTduV7Fw64iJ.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/CJ6NM7BMqO1H.png?imageslim" alt="mark">查看源码可惜发现双引号被转移了.</li>
 </ul>
 <h1 id="利用html的高兼容性"><a href="#利用html的高兼容性" class="headerlink" title="利用html的高兼容性"></a>利用html的高兼容性</h1><ul>
 <li>单引号可以闭合双引号,所以改用单引号<br>  ‘<script>alert(1)</script>//<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/qcQ9s4EyrlIG.png?imageslim" alt="mark"><br>点击输入后有相关结果提示但是输入框里的东西没了,说明刚刚的被当作html代码执行了</li>
 </ul>
 <h1 id="事件型触发xss"><a href="#事件型触发xss" class="headerlink" title="事件型触发xss"></a>事件型触发xss</h1><ul>
 <li>刚刚第一种方法失败了,所以尝试第三种方法触发xss<br>这时候用oninput标签,意义是输入框里要是输入东西就会产生弹窗.再输入1,就出flag了 <code>&#39;oninput=alert(1)//</code><br>因为弹窗弹的东西被nf修改了所以弹出的不是自己写的1<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/h6Q0CehlBYpk.png?imageslim" alt="mark"><br>所以关键处还是在于找到可用的输入输出点</li>
+</ul>
+<ul>
+<li><code>&lt;script&gt;alert(1)&lt;/script&gt;</code>这句话没加代码竟然直接在blog跳出弹窗了…</li>
 </ul>
 
     </div>
@@ -340,61 +343,61 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/%E5%AD%98%E5%82%A8%E5%9E%8BXSS-zkaq%E9%9D%B6%E5%9C%BA/">存储型XSS--zkaq靶场</a>
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">文件上传绕过姿势</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/">存储型XSS</a>
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E7%AB%AF%E6%BC%8F%E6%B4%9E-20-23-zkaq/">文件上端漏洞(20-23)--zkaq</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS-zkaq%E9%9D%B6%E5%9C%BA/">反射型XSS--zkaq靶场</a>
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E7%AB%AF%E6%BC%8F%E6%B4%9E-10-20-zkaq/">文件上端漏洞(10-20)--zkaq</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/">反射型XSS</a>
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E7%AB%AF%E6%BC%8F%E6%B4%9E-1-10-zkaq/">文件上端漏洞(1-10)--zkaq</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">反弹注入--zkaq靶场</a>
+                    <a href="/2020/04/06/zkaq%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-%E4%B8%89/">zkaq文件上传漏洞(三)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/">Mssql注入--反弹注入</a>
+                    <a href="/2020/04/06/zkaq%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-%E4%BA%8C/">zkaq文件上传漏洞(二)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/DNS%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">DNS注入--zkaq靶场</a>
+                    <a href="/2020/04/06/zkaq%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-%E4%B8%80/">zkaq文件上传漏洞(一)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
+                    <a href="/2020/04/05/CSRF-zkaq%E9%9D%B6%E5%9C%BA/">CSRF--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/access%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA2/">access注入--zkaq靶场2</a>
+                    <a href="/2020/04/05/CSRF/">CSRF</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/zkaq-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-zkaq%E9%9D%B6%E5%9C%BA/">zkaq--正则表达式--zkaq靶场</a>
+                    <a href="/2020/04/05/Dom-Based-XSS-zkaq%E9%9D%B6%E5%9C%BA/">Dom Based XSS--zkaq靶场</a>
                 </span>
             </li>
             
@@ -416,61 +419,61 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/04/05/CSRF-zkaq%E9%9D%B6%E5%9C%BA/">CSRF--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/05/CSRF/">CSRF</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/04/05/DNS%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">DNS注入--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/">Mssql注入--反弹注入</a>
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">SQL注入绕过姿势</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
+                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/">SQL注入--宽字节注入</a>
+                    <a href="/2020/04/05/zkaq-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-zkaq%E9%9D%B6%E5%9C%BA/">zkaq--正则表达式--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
+                    <a href="/2020/04/05/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS-zkaq%E9%9D%B6%E5%9C%BA/">反射型XSS--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">SQL语句--连接查询</a>
+                    <a href="/2020/04/05/%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">反弹注入--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/access%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">access注入--zkaq靶场</a>
+                    <a href="/2020/04/02/%E5%85%B3%E4%BA%8Emarkdown2/">关于markdown2</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web服务通信原理</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/01/zkaq-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">zkaq--序列化与反序列化</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/04/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">宽字节注入--zkaq靶场</a>
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E7%AB%AF%E6%BC%8F%E6%B4%9E-10-20-zkaq/">文件上端漏洞(10-20)--zkaq</a>
                 </span>
             </li>
             
@@ -503,43 +506,49 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 18.327210811461782px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
+    <a href="/tags/CSRF/" style="font-size: 15.09497437740824px;" class="tag-cloud-link">CSRF</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 14.038193238116952px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 17.933132754238702px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
     
-    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 14.405293696449828px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
+    <a href="/tags/Dom-Based-XSS/" style="font-size: 14.185867469359398px;" class="tag-cloud-link">Dom Based XSS</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 9.669050939007139px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 18.59524301862776px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 19.633952604934063px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 16.594631440817196px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 17.40302525757703px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 10.154765803260663px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 14.580568414895389px;" class="tag-cloud-link">SQL注入--盲注</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 13.819798327276867px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 12.835851392629415px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 18.273410620049404px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 14.90996618641564px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 18.43921109506615px;" class="tag-cloud-link">SQL注入--盲注</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 12.56889998856709px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 17.47765323340944px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 15.392229460942985px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 13.402405841845548px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 10.522137290265384px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 8.723445002653698px;" class="tag-cloud-link">Access注入--cookie注入</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 11.735533102255399px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 13.258844920176642px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 16.184586760913145px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 14.746889982522628px;" class="tag-cloud-link">Access注入--偏移注入</a>
     
-    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.633359691301003px;" class="tag-cloud-link">正则表达式</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 10.63700167622429px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 11.792912161155193px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 13.912290745724317px;" class="tag-cloud-link">正则表达式</a>
     
-    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 8.648660270874117px;" class="tag-cloud-link">反射型XSS</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 15.956494718010127px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 10.186998059632959px;" class="tag-cloud-link">存储型XSS</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 13.77347947312344px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 10.872050930956075px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 9.231398274130093px;" class="tag-cloud-link">反射型XSS</a>
+    
+    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 8.472703103783317px;" class="tag-cloud-link">存储型XSS</a>
+    
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 8.710124668462582px;" class="tag-cloud-link">文件上传漏洞</a>
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 9.554349624220453px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
     
 </div>
                 
