@@ -145,11 +145,11 @@
                         
                         
                         <li>
-                            <a href="/categories/%E6%8E%8C%E6%8E%A7%E5%AE%89%E5%85%A8write-up/">掌控安全write up</a>
+                            <a href="/categories/%E6%8E%8C%E6%8E%A7%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97/">掌控安全系列</a>
                         </li>
                         
                         <li>
-                            <a href="/categories/%E6%8E%8C%E6%8E%A7%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97/">掌控安全系列</a>
+                            <a href="/categories/%E6%8E%8C%E6%8E%A7%E5%AE%89%E5%85%A8write-up/">掌控安全write up</a>
                         </li>
                         
                         <li>
@@ -183,11 +183,11 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
+                            <a href="/tags/Dom-Based-XSS/">Dom Based XSS</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/Dom-Based-XSS/">Dom Based XSS</a>
+                            <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
                         </li>
                         
                         
@@ -273,11 +273,14 @@
         <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><ul>
 <li>CSRF (Cross-site request forgery)跨站请求伪造:也被称为“One Click Attack”或者Session Riding,通常缩写为CSRF或者XSRF，是一种对网站的恶意利用。尽管听起来像跨站脚本(XSS) ，但它与XSs非常不同，XSS利用站点内的信任用户，而CSRF则通过伪装来自受信任用户的请求来利用受信任的网站。与XSS攻击 相比，CSRF攻击往往不大流行(因此对其进行防范的资源也相当稀少)和难以防范，所以被认为比XSs更具危险性。<br><br>其实说白了，<font color="red">csrf漏洞的成因就是网站的cookie在浏览器中不会过期，只要不关闭浏览器或者退出登录，那以后只要是访问这个网站，都会默认你已经登录的状态。而在这个期间，攻击者发送了构造好的csrf脚本或包含csrf脚本的链接，可能会执行一些用户不想做的功能</font>(比如是添加账号等)</li>
 </ul>
-<h1 id="缺点与防范"><a href="#缺点与防范" class="headerlink" title="缺点与防范"></a>缺点与防范</h1><p>核心在于缺乏验证<br><br>1.像验证码是他最好的防御方法修改密码， 我们要输入-个验证码<br>做任何操作都加个验证码其实完全杜绝CSRF<br><br>2.开发他们为了安全<br>设置了-个东西叫做Token,<br>是一个验证机制<br><br>每个请求的表单里面都存在着一个字段，这个字段就是Token,他会随机生成一段字符串,<br>然后cookie里面也带有这段字符串.如果用户发起请求的token字段和服务器端的不一样就会认为这不是你本人访问的就会拒绝访问,原理和验证码差不多.</p>
+<h1 id="缺点与防范"><a href="#缺点与防范" class="headerlink" title="缺点与防范"></a>缺点与防范</h1><ul>
+<li>核心在于缺乏验证<br></li>
+</ul>
+<p>1.像验证码是他最好的防御方法修改密码,我们要输入一个验证码做任何操作都加个验证码其实完全杜绝CSRF<br><br>2.开发他们为了安全设置了-个东西叫做Token,是一个验证机制<br><br>每个请求的表单里面都存在着一个字段，这个字段就是Token,他会随机生成一段字符串,<br>然后cookie里面也带有这段字符串.如果用户发起请求的token字段和服务器端的不一样就会认为这不是你本人访问的就会拒绝访问,原理和验证码差不多.</p>
 <h1 id="小知识点"><a href="#小知识点" class="headerlink" title="小知识点"></a>小知识点</h1><ol>
 <li>一个网页如果没有token,就可以去尝试csrf</li>
 <li>抓包时Token不一定就叫token,可能会被改成其他名字,什么uid拉什么什么的.最简单的验证是不是token的办法注册两个账号然后抓一一个账号的包,然后制作成CSRE攻击然后换一个账号去触发,看看是否有效果</li>
-<li>Referer是请求头里的一部分,用于告诉浏览器你是从哪个网站过来的,如果是主动进来的就不会有referer.虽然他能起到一定的防御作用,但是这个是可以伪造的……只要cookie是最好的验证手法</li>
+<li>Referer是请求头里的一部分,用于告诉浏览器你是从哪个网站过来的,如果是主动进来的就不会有referer.虽然他能起到一定的防御作用,但是这个是可以伪造的……只有cookie是最好的验证手法</li>
 <li>csrf再src平台上可能会被定为小危险,然后不给你钱,自己再偷偷修复???</li>
 </ol>
 <h1 id="测试csrf流程"><a href="#测试csrf流程" class="headerlink" title="测试csrf流程"></a>测试csrf流程</h1><ol>
@@ -289,7 +292,7 @@
 <li>为啥执行了phpinfo之后就说取得了webshell?<br>因为phpinfo是代码,不是系统命令.而取得了webshell之后是可以执行php代码的,所以说如果可以执行phpinfo就可是getshell了</li>
 </ul>
 <h1 id="靶场实战"><a href="#靶场实战" class="headerlink" title="靶场实战"></a>靶场实战</h1><ul>
-<li>传送门:</li>
+<li>传送门:<a href="https://wxnsoul.github.io/2020/04/05/CSRF-zkaq%E9%9D%B6%E5%9C%BA/">https://wxnsoul.github.io/2020/04/05/CSRF-zkaq%E9%9D%B6%E5%9C%BA/</a></li>
 </ul>
 
     </div>
@@ -352,6 +355,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/04/07/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E4%B8%8E%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/">验证码绕过与密码找回</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">文件上传绕过姿势</a>
                 </span>
             </li>
@@ -404,12 +413,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/05/Dom-Based-XSS-zkaq%E9%9D%B6%E5%9C%BA/">Dom Based XSS--zkaq靶场</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -428,61 +431,61 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/DNS%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">DNS注入--zkaq靶场</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/05/Dom-Based-XSS-zkaq%E9%9D%B6%E5%9C%BA/">Dom Based XSS--zkaq靶场</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/05/Dom-Based-XSS/">Dom Based XSS</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2020/04/03/Get%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">Get注入--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/POST%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">POST注入--zkaq靶场</a>
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/">SQL注入--宽字节注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
+                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web服务通信原理</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">SQL语句--连接查询</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/%E5%AD%98%E5%82%A8%E5%9E%8BXSS-zkaq%E9%9D%B6%E5%9C%BA/">存储型XSS--zkaq靶场</a>
+                    <a href="/2020/04/05/access%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA2/">access注入--zkaq靶场2</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E7%AB%AF%E6%BC%8F%E6%B4%9E-20-23-zkaq/">文件上端漏洞(20-23)--zkaq</a>
+                    <a href="/2020/04/03/zkaq-web%E5%AE%89%E5%85%A8%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/">zkaq--web安全前端基础</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/">SQL语句--聚合函数</a>
+                    <a href="/2020/04/06/zkaq%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-%E4%BA%8C/">zkaq文件上传漏洞(二)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/%E7%9B%B2%E6%B3%A8-zkaq%E9%9D%B6%E5%9C%BA/">盲注--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/05/%E8%A7%A3%E5%86%B3tags%E5%92%8Ccategories%E7%82%B9%E5%87%BB%E5%90%8E%E9%A1%B5%E9%9D%A2%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决tags和categories点击后页面为空的问题</a>
                 </span>
             </li>
             
@@ -515,49 +518,51 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/CSRF/" style="font-size: 8.135868806548821px;" class="tag-cloud-link">CSRF</a>
+    <a href="/tags/CSRF/" style="font-size: 17.190551970490173px;" class="tag-cloud-link">CSRF</a>
     
-    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 8.788497933647083px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
+    <a href="/tags/Dom-Based-XSS/" style="font-size: 15.277409642442574px;" class="tag-cloud-link">Dom Based XSS</a>
     
-    <a href="/tags/Dom-Based-XSS/" style="font-size: 9.948540067196904px;" class="tag-cloud-link">Dom Based XSS</a>
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 19.501223083866037px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 12.926458807784837px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 19.683341394010483px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 9.002422812847964px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 18.37566683382589px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 10.849913958749996px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 16.303853868981516px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 8.587685792634776px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 16.40760641806484px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 18.16823993994102px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 19.2920812812977px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 13.99612713358739px;" class="tag-cloud-link">SQL注入--盲注</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 12.423100161714572px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 9.250070678134964px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 17.168845309722055px;" class="tag-cloud-link">SQL注入--盲注</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 18.53915956753697px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 17.31073907429571px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 14.14576550602392px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 18.430240905205217px;" class="tag-cloud-link">Access注入--cookie注入</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 19.009393027489622px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 17.511484847187248px;" class="tag-cloud-link">Access注入--偏移注入</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 14.32809629612952px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 13.41281996150839px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 9.04276057768124px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 17.537870095550716px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 12.654867102665264px;" class="tag-cloud-link">正则表达式</a>
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 15.410289977226595px;" class="tag-cloud-link">正则表达式</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 17.656338308661823px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 19.324152914714382px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 16.96657906110114px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 8.738652290329146px;" class="tag-cloud-link">文件上传漏洞</a>
     
-    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 13.718551207621072px;" class="tag-cloud-link">反射型XSS</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 12.418254316356514px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 10.620503820373633px;" class="tag-cloud-link">存储型XSS</a>
+    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 10.989439149982747px;" class="tag-cloud-link">反射型XSS</a>
     
-    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 18.17782534226204px;" class="tag-cloud-link">文件上传漏洞</a>
+    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 17.257960759259px;" class="tag-cloud-link">存储型XSS</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 11.89443694330824px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 12.046362884788252px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    
+    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 14.268602973276906px;" class="tag-cloud-link">验证码绕过和密码找回</a>
     
 </div>
                 
