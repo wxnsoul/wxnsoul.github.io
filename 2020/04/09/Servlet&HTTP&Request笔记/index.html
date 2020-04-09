@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="伏诗">
+    
+    
+    
+    
+    
+    
+    <title>javaee--servlet(一) | 伏诗</title>
+    <link href="http://wxnsoul.github.io" rel="prefetch" />
+
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/jquery.min.js"></script>
+
+    
+<script src="/js/bootstrap.min.js"></script>
+
+    
+<script src="/js/aos.js"></script>
+
+    
+<script src="/js/highslide/highslide-full.min.js"></script>
+
+    
+<link rel="stylesheet" href="/js/highslide/highslide.css">
+
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://wxnsoul.github.io" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/about" class="menuItem" style="left: 50%; top: 85%;">关于</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="http://wxnsoul.github.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">伏诗</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/%E6%8E%8C%E6%8E%A7%E5%AE%89%E5%85%A8write-up/">掌控安全write up</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/%E6%8E%8C%E6%8E%A7%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97/">掌控安全系列</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/OS/">OS</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/categories">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/Dom-Based-XSS/">Dom Based XSS</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/CSRF/">CSRF</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="http://wxnsoul.github.io">伏诗</a>
+        >
+        <span>javaee--servlet(一)</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/">javaee--servlet(一)</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/servlet/">servlet</a>, 
+                
+                <a href="/tags/HTTP/">HTTP</a>, 
+                
+                <a href="/tags/Request/">Request</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2020-04-09
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/">javaee--servlet(一)</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2020-04-09
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/servlet/">servlet</a>, 
+                
+                <a href="/tags/HTTP/">HTTP</a>, 
+                
+                <a href="/tags/Request/">Request</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h1 id="今日内容："><a href="#今日内容：" class="headerlink" title="今日内容："></a>今日内容：</h1><pre><code>1. Servlet
+2. HTTP协议
+3. Request</code></pre><h2 id="Servlet："><a href="#Servlet：" class="headerlink" title="Servlet："></a>Servlet：</h2><pre><code>1. 概念
+2. 步骤
+3. 执行原理
+4. 生命周期
+5. Servlet3.0 注解配置
+6. Servlet的体系结构    
+    Servlet -- 接口
+        |
+    GenericServlet -- 抽象类
+        |
+    HttpServlet  -- 抽象类
+
+    * GenericServlet：将Servlet接口中其他的方法做了默认空实现，只将service()方法作为抽象
+        * 将来定义Servlet类时，可以继承GenericServlet，实现service()方法即可
+
+    * HttpServlet：对http协议的一种封装，简化操作
+        1. 定义类继承HttpServlet
+        2. 复写doGet/doPost方法
+
+7. Servlet相关配置
+    1. urlpartten:Servlet访问路径
+        1. 一个Servlet可以定义多个访问路径 ： @WebServlet({&quot;/d4&quot;,&quot;/dd4&quot;,&quot;/ddd4&quot;})
+        2. 路径定义规则：
+            1. /xxx：路径匹配
+            2. /xxx/xxx:多层路径，目录结构
+            3. *.do：扩展名匹配</code></pre><h2 id="HTTP："><a href="#HTTP：" class="headerlink" title="HTTP："></a>HTTP：</h2><pre><code>* 概念：Hyper Text Transfer Protocol 超文本传输协议
+    * 传输协议：定义了，客户端和服务器端通信时，发送数据的格式
+    * 特点：
+        1. 基于TCP/IP的高级协议
+        2. 默认端口号:80
+        3. 基于请求/响应模型的:一次请求对应一次响应
+        4. 无状态的：每次请求之间相互独立，不能交互数据
+
+    * 历史版本：
+        * 1.0：每一次请求响应都会建立新的连接
+        * 1.1：复用连接
+
+* 请求消息数据格式
+    1. 请求行
+        请求方式 请求url 请求协议/版本
+        GET /login.html    HTTP/1.1
+
+        * 请求方式：
+            * HTTP协议有7中请求方式，常用的有2种
+                * GET：
+                    1. 请求参数在请求行中，在url后。
+                    2. 请求的url长度有限制的
+                    3. 不太安全
+                * POST：
+                    1. 请求参数在请求体中
+                    2. 请求的url长度没有限制的
+                    3. 相对安全
+    2. 请求头：客户端浏览器告诉服务器一些信息
+        请求头名称: 请求头值
+        * 常见的请求头：
+            1. User-Agent：浏览器告诉服务器，我访问你使用的浏览器版本信息
+                * 可以在服务器端获取该头的信息，解决浏览器的兼容性问题
+
+            2. Referer：http://localhost/login.html
+                * 告诉服务器，我(当前请求)从哪里来？
+                    * 作用：
+                        1. 防盗链：
+                        2. 统计工作：
+    3. 请求空行
+        空行，就是用于分割POST请求的请求头，和请求体的。
+    4. 请求体(正文)：
+        * 封装POST请求消息的请求参数的
+
+    * 字符串格式：
+        POST /login.html    HTTP/1.1
+        Host: localhost
+        User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+        Accept-Encoding: gzip, deflate
+        Referer: http://localhost/login.html
+        Connection: keep-alive
+        Upgrade-Insecure-Requests: 1
+
+        username=zhangsan    
+
+
+* 响应消息数据格式</code></pre><h2 id="Request："><a href="#Request：" class="headerlink" title="Request："></a>Request：</h2><pre><code>1. request对象和response对象的原理
+    1. request和response对象是由服务器创建的。我们来使用它们
+    2. request对象是来获取请求消息，response对象是来设置响应消息
+
+2. request对象继承体系结构：    
+    ServletRequest        --    接口
+        |    继承
+    HttpServletRequest    -- 接口
+        |    实现
+    org.apache.catalina.connector.RequestFacade 类(tomcat)
+
+3. request功能：
+    1. 获取请求消息数据
+        1. 获取请求行数据
+            * GET /day14/demo1?name=zhangsan HTTP/1.1
+            * 方法：
+                1. 获取请求方式 ：GET
+                    * String getMethod()  
+                2. (*)获取虚拟目录：/day14
+                    * String getContextPath()
+                3. 获取Servlet路径: /demo1
+                    * String getServletPath()
+                4. 获取get方式请求参数：name=zhangsan
+                    * String getQueryString()
+                5. (*)获取请求URI：/day14/demo1
+                    * String getRequestURI():        /day14/demo1
+                    * StringBuffer getRequestURL()  :http://localhost/day14/demo1
+
+                    * URL:统一资源定位符 ： http://localhost/day14/demo1    中华人民共和国
+                    * URI：统一资源标识符 : /day14/demo1                    共和国
+
+                6. 获取协议及版本：HTTP/1.1
+                    * String getProtocol()
+
+                7. 获取客户机的IP地址：
+                    * String getRemoteAddr()
+
+        2. 获取请求头数据
+            * 方法：
+                * (*)String getHeader(String name):通过请求头的名称获取请求头的值
+                * Enumeration&lt;String&gt; getHeaderNames():获取所有的请求头名称
+
+        3. 获取请求体数据:
+            * 请求体：只有POST请求方式，才有请求体，在请求体中封装了POST请求的请求参数
+            * 步骤：
+                1. 获取流对象
+                    *  BufferedReader getReader()：获取字符输入流，只能操作字符数据
+                    *  ServletInputStream getInputStream()：获取字节输入流，可以操作所有类型数据
+                        * 在文件上传知识点后讲解
+
+                2. 再从流对象中拿数据
+
+
+    2. 其他功能：
+        1. 获取请求参数通用方式：不论get还是post请求方式都可以使用下列方法来获取请求参数
+            1. String getParameter(String name):根据参数名称获取参数值    username=zs&amp;password=123
+            2. String[] getParameterValues(String name):根据参数名称获取参数值的数组  hobby=xx&amp;hobby=game
+            3. Enumeration&lt;String&gt; getParameterNames():获取所有请求的参数名称
+            4. Map&lt;String,String[]&gt; getParameterMap():获取所有参数的map集合
+
+            * 中文乱码问题：
+                * get方式：tomcat 8 已经将get方式乱码问题解决了
+                * post方式：会乱码
+                    * 解决：在获取参数前，设置request的编码request.setCharacterEncoding(&quot;utf-8&quot;);
+
+
+        2. 请求转发：一种在服务器内部的资源跳转方式
+            1. 步骤：
+                1. 通过request对象获取请求转发器对象：RequestDispatcher getRequestDispatcher(String path)
+                2. 使用RequestDispatcher对象来进行转发：forward(ServletRequest request, ServletResponse response) 
+
+            2. 特点：
+                1. 浏览器地址栏路径不发生变化
+                2. 只能转发到当前服务器内部资源中。
+                3. 转发是一次请求
+
+
+        3. 共享数据：
+            * 域对象：一个有作用范围的对象，可以在范围内共享数据
+            * request域：代表一次请求的范围，一般用于请求转发的多个资源中共享数据
+            * 方法：
+                1. void setAttribute(String name,Object obj):存储数据
+                2. Object getAttitude(String name):通过键获取值
+                3. void removeAttribute(String name):通过键移除键值对
+
+        4. 获取ServletContext：
+            * ServletContext getServletContext()</code></pre><h2 id="案例：用户登录"><a href="#案例：用户登录" class="headerlink" title="案例：用户登录"></a>案例：用户登录</h2><pre><code>* 用户登录案例需求：
+    1.编写login.html登录页面
+        username &amp; password 两个输入框
+    2.使用Druid数据库连接池技术,操作mysql，day14数据库中user表
+    3.使用JdbcTemplate技术封装JDBC
+    4.登录成功跳转到SuccessServlet展示：登录成功！用户名,欢迎您
+    5.登录失败跳转到FailServlet展示：登录失败，用户名或密码错误
+
+
+* 分析
+
+* 开发步骤
+    1. 创建项目，导入html页面，配置文件，jar包
+    2. 创建数据库环境
+        CREATE DATABASE day14;
+        USE day14;
+        CREATE TABLE USER(
+
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            username VARCHAR(32) UNIQUE NOT NULL,
+            PASSWORD VARCHAR(32) NOT NULL
+        );
+
+    3. 创建包cn.itcast.domain,创建类User
+        package cn.itcast.domain;
+        /**
+         * 用户的实体类
+         */
+        public class User {
+
+            private int id;
+            private String username;
+            private String password;
+
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getUsername() {
+                return username;
+            }
+
+            public void setUsername(String username) {
+                this.username = username;
+            }
+
+            public String getPassword() {
+                return password;
+            }
+
+            public void setPassword(String password) {
+                this.password = password;
+            }
+
+            @Override
+            public String toString() {
+                return &quot;User{&quot; +
+                        &quot;id=&quot; + id +
+                        &quot;, username=&apos;&quot; + username + &apos;\&apos;&apos; +
+                        &quot;, password=&apos;&quot; + password + &apos;\&apos;&apos; +
+                        &apos;}&apos;;
+            }
+        }
+    4. 创建包cn.itcast.util,编写工具类JDBCUtils
+        package cn.itcast.util;
+
+        import com.alibaba.druid.pool.DruidDataSourceFactory;
+
+        import javax.sql.DataSource;
+        import javax.xml.crypto.Data;
+        import java.io.IOException;
+        import java.io.InputStream;
+        import java.sql.Connection;
+        import java.sql.SQLException;
+        import java.util.Properties;
+
+        /**
+         * JDBC工具类 使用Durid连接池
+         */
+        public class JDBCUtils {
+
+            private static DataSource ds ;
+
+            static {
+
+                try {
+                    //1.加载配置文件
+                    Properties pro = new Properties();
+                    //使用ClassLoader加载配置文件，获取字节输入流
+                    InputStream is = JDBCUtils.class.getClassLoader().getResourceAsStream(&quot;druid.properties&quot;);
+                    pro.load(is);
+
+                    //2.初始化连接池对象
+                    ds = DruidDataSourceFactory.createDataSource(pro);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            /**
+             * 获取连接池对象
+             */
+            public static DataSource getDataSource(){
+                return ds;
+            }
+
+
+            /**
+             * 获取连接Connection对象
+             */
+            public static Connection getConnection() throws SQLException {
+                return  ds.getConnection();
+            }
+        }
+    5. 创建包cn.itcast.dao,创建类UserDao,提供login方法
+
+        package cn.itcast.dao;
+
+        import cn.itcast.domain.User;
+        import cn.itcast.util.JDBCUtils;
+        import org.springframework.dao.DataAccessException;
+        import org.springframework.jdbc.core.BeanPropertyRowMapper;
+        import org.springframework.jdbc.core.JdbcTemplate;
+
+        /**
+         * 操作数据库中User表的类
+         */
+        public class UserDao {
+
+            //声明JDBCTemplate对象共用
+            private JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
+
+            /**
+             * 登录方法
+             * @param loginUser 只有用户名和密码
+             * @return user包含用户全部数据,没有查询到，返回null
+             */
+            public User login(User loginUser){
+                try {
+                    //1.编写sql
+                    String sql = &quot;select * from user where username = ? and password = ?&quot;;
+                    //2.调用query方法
+                    User user = template.queryForObject(sql,
+                            new BeanPropertyRowMapper&lt;User&gt;(User.class),
+                            loginUser.getUsername(), loginUser.getPassword());
+
+
+                    return user;
+                } catch (DataAccessException e) {
+                    e.printStackTrace();//记录日志
+                    return null;
+                }
+            }
+        }
+
+    6. 编写cn.itcast.web.servlet.LoginServlet类
+        package cn.itcast.web.servlet;
+
+        import cn.itcast.dao.UserDao;
+        import cn.itcast.domain.User;
+
+        import javax.servlet.ServletException;
+        import javax.servlet.annotation.WebServlet;
+        import javax.servlet.http.HttpServlet;
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpServletResponse;
+        import java.io.IOException;
+
+
+        @WebServlet(&quot;/loginServlet&quot;)
+        public class LoginServlet extends HttpServlet {
+
+
+            @Override
+            protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+                //1.设置编码
+                req.setCharacterEncoding(&quot;utf-8&quot;);
+                //2.获取请求参数
+                String username = req.getParameter(&quot;username&quot;);
+                String password = req.getParameter(&quot;password&quot;);
+                //3.封装user对象
+                User loginUser = new User();
+                loginUser.setUsername(username);
+                loginUser.setPassword(password);
+
+                //4.调用UserDao的login方法
+                UserDao dao = new UserDao();
+                User user = dao.login(loginUser);
+
+                //5.判断user
+                if(user == null){
+                    //登录失败
+                    req.getRequestDispatcher(&quot;/failServlet&quot;).forward(req,resp);
+                }else{
+                    //登录成功
+                    //存储数据
+                    req.setAttribute(&quot;user&quot;,user);
+                    //转发
+                    req.getRequestDispatcher(&quot;/successServlet&quot;).forward(req,resp);
+                }
+
+            }
+
+            @Override
+            protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+                this.doGet(req,resp);
+            }
+        }
+
+    7. 编写FailServlet和SuccessServlet类
+        @WebServlet(&quot;/successServlet&quot;)
+        public class SuccessServlet extends HttpServlet {
+            protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                //获取request域中共享的user对象
+                User user = (User) request.getAttribute(&quot;user&quot;);
+
+                if(user != null){
+                    //给页面写一句话
+
+                    //设置编码
+                    response.setContentType(&quot;text/html;charset=utf-8&quot;);
+                    //输出
+                    response.getWriter().write(&quot;登录成功！&quot;+user.getUsername()+&quot;,欢迎您&quot;);
+                }
+
+
+            }        
+
+
+        @WebServlet(&quot;/failServlet&quot;)
+        public class FailServlet extends HttpServlet {
+            protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                //给页面写一句话
+
+                //设置编码
+                response.setContentType(&quot;text/html;charset=utf-8&quot;);
+                //输出
+                response.getWriter().write(&quot;登录失败，用户名或密码错误&quot;);
+
+            }
+
+            protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                this.doPost(request,response);
+            }
+        }
+
+
+
+    8. login.html中form表单的action路径的写法
+        * 虚拟目录+Servlet的资源路径
+
+    9. BeanUtils工具类，简化数据封装
+        * 用于封装JavaBean的
+        1. JavaBean：标准的Java类
+            1. 要求：
+                1. 类必须被public修饰
+                2. 必须提供空参的构造器
+                3. 成员变量必须使用private修饰
+                4. 提供公共setter和getter方法
+            2. 功能：封装数据
+
+
+        2. 概念：
+            成员变量：
+            属性：setter和getter方法截取后的产物
+                例如：getUsername() --&gt; Username--&gt; username
+
+
+        3. 方法：
+            1. setProperty()
+            2. getProperty()
+            3. populate(Object obj , Map map):将map集合的键值对信息，封装到对应的JavaBean对象中</code></pre>
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            伏诗
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/">javaee--servlet(一)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/09/javaee-servlet-%E4%B8%80/">javaee--servlet(一)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/SSRF-zkaq%E9%9D%B6%E5%9C%BA/">SSRF--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/SSRF/">SSRF</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/%E8%B6%8A%E6%9D%83-zkaq%E9%9D%B6%E5%9C%BA/">越权--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/%E8%B6%8A%E6%9D%83/">越权</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/SQL-%E5%AE%9E%E6%88%98%E8%BF%9B%E9%98%B6/">SQL--实战进阶</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/OS%E4%B9%A0%E9%A2%98-%E5%AF%B9%E5%88%86%E6%98%93%E4%BD%9C%E4%B8%9A2/">OS习题--对分易作业2</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/07/OS%E4%B9%A0%E9%A2%98-%E5%AF%B9%E5%88%86%E6%98%93%E4%BD%9C%E4%B8%9A1/">OS习题--对分易作业1</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/07/hexo%E4%B8%8A%E4%BC%A0%E6%96%87%E7%AB%A0%E5%A4%B1%E8%B4%A5/">hexo上传文章失败</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/POST%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">POST注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/SQL-%E5%AE%9E%E6%88%98%E8%BF%9B%E9%98%B6/">SQL--实战进阶</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/">javaee--servlet(一)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/03/zkaq-web%E5%AE%89%E5%85%A8%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/">zkaq--web安全前端基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/06/zkaq%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-%E4%B8%80/">zkaq文件上传漏洞(一)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/05/%E5%AD%98%E5%82%A8%E5%9E%8BXSS-zkaq%E9%9D%B6%E5%9C%BA/">存储型XSS--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/">文件上传绕过姿势</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E7%AB%AF%E6%BC%8F%E6%B4%9E-20-23-zkaq/">文件上端漏洞(20-23)--zkaq</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/Dom-Based-XSS/" style="font-size: 16.434587795098324px;" class="tag-cloud-link">Dom Based XSS</a>
+    
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 16.94411247590298px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
+    
+    <a href="/tags/CSRF/" style="font-size: 13.532765600159987px;" class="tag-cloud-link">CSRF</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 16.307797636777075px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 12.000813825512912px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    
+    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 16.979412592543945px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 15.395700643193795px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
+    
+    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 11.766842049010311px;" class="tag-cloud-link">OS习题</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 18.02185167549739px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    
+    <a href="/tags/SQL-DDL/" style="font-size: 16.408157654765px;" class="tag-cloud-link">SQL-DDL</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 15.819919229960366px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 11.450786151363136px;" class="tag-cloud-link">SQL注入--盲注</a>
+    
+    <a href="/tags/servlet/" style="font-size: 17.76859843266393px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/HTTP/" style="font-size: 17.925532756052114px;" class="tag-cloud-link">HTTP</a>
+    
+    <a href="/tags/Request/" style="font-size: 14.85365996841188px;" class="tag-cloud-link">Request</a>
+    
+    <a href="/tags/SSRF/" style="font-size: 16.24171151790056px;" class="tag-cloud-link">SSRF</a>
+    
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 8.284669257484067px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 19.690954182248497px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 8.75784340117109px;" class="tag-cloud-link">博客学习</a>
+    
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 16.989559180199542px;" class="tag-cloud-link">web前端安全基础</a>
+    
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 18.635281039721818px;" class="tag-cloud-link">web通信原理</a>
+    
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.579523541811472px;" class="tag-cloud-link">序列化与反序列化</a>
+    
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 11.558938950245377px;" class="tag-cloud-link">正则表达式</a>
+    
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 18.23090450808119px;" class="tag-cloud-link">文件上传漏洞</a>
+    
+    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 11.081099719252267px;" class="tag-cloud-link">反射型XSS</a>
+    
+    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 12.072539998780051px;" class="tag-cloud-link">存储型XSS</a>
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 14.599880134273294px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    
+    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 13.989259216418828px;" class="tag-cloud-link">越权</a>
+    
+    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 16.531296162137615px;" class="tag-cloud-link">验证码绕过和密码找回</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum♂</a>
+    </li>
+    
+    <li>
+        <a href="https://lzfangwen.github.io/lzfangwen.github.io/" target="_blank">绅士斌斌♂</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.j0k3r.cn/" target="_blank">hacker_Joker♂</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/wxnsoul/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://coding.net/u/SORA1" target="_blank">Coding</a>
+    </li>
+    
+    <li>
+        <a href="https://i.csdn.net/#/uc/profile" target="_blank">CSDN</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 伏诗 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+
+<script src="/js/activate-power-mode.js"></script>
+
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+
+<script src="/js/oni.js"></script>
+
+
+
+
+</html>
