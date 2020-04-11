@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="伏诗">
+    
+    
+    
+    
+    
+    
+    <title>本地包含与远程包含--zkaq靶场 | 伏诗</title>
+    <link href="http://wxnsoul.github.io" rel="prefetch" />
+
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/jquery.min.js"></script>
+
+    
+<script src="/js/bootstrap.min.js"></script>
+
+    
+<script src="/js/aos.js"></script>
+
+    
+<script src="/js/highslide/highslide-full.min.js"></script>
+
+    
+<link rel="stylesheet" href="/js/highslide/highslide.css">
+
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpg,preview7.jpg,preview8.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="http://wxnsoul.github.io" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/about" class="menuItem" style="left: 50%; top: 85%;">关于</a>
+            <a href="/message" class="menuItem" style="left: 19.6891%; top: 67.5%;">留言板</a>
+
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="http://wxnsoul.github.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">伏诗</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/%E6%8E%8C%E6%8E%A7%E5%AE%89%E5%85%A8write-up/">掌控安全write up</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/%E6%8E%8C%E6%8E%A7%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97/">掌控安全系列</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Javaee/">Javaee</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/categories">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/CSRF/">CSRF</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/Dom-Based-XSS/">Dom Based XSS</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="http://wxnsoul.github.io">伏诗</a>
+        >
+        <span>本地包含与远程包含--zkaq靶场</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB-zkaq%E9%9D%B6%E5%9C%BA/">本地包含与远程包含--zkaq靶场</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/">本地包含于远程包含</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2020-04-11
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB-zkaq%E9%9D%B6%E5%9C%BA/">本地包含与远程包含--zkaq靶场</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2020-04-11
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/">本地包含于远程包含</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <ul>
+<li>这边找了半天终于找来了phpmyadmin4.8.1的源码,之前一直以为是phpmywid导致找不着…</li>
+</ul>
+<p>#代码审计</p>
+<ul>
+<li>因为用到的函数都包含include,require所以直接全局检索这两个关键词即可<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/cjcNVmlF6gId.png?imageslim" alt="mark">)所有的并不是都需要去查看,像1,2,3这些都已经被死死的规定好了变量内容,就不需要去看了,像第八个可以自己控制变量target的输入,就可以去查看<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/uWhE7cJbf1Lu.png?imageslim" alt="mark">可以看到要满足这么多条件才可以执行include<br>现在解释下这些条件<ol>
+<li>变量target不能为空</li>
+<li>变量target得是字符串</li>
+<li>不能是index开头(因为有!)</li>
+<li>不能再黑名单中<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/BerR9PGW9IdL.png?imageslim" alt="mark">全文定位后后现黑名单就包括这两个</li>
+<li>这是一个调用类的方法<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/PmBiYWa58qN3.png?imageslim" alt="mark">定位函数查到找在core.php中,我们只需要看如何才能返回true就可以,因为第五个条件要成立.</li>
+</ol>
+</li>
+</ul>
+<p>#分析</p>
+<ul>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/UvBvFwkdIwtv.png?imageslim" alt="mark">)这就是给变量白名单赋值goto_whitelist里面的字符串<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/MNewv2pwDbfg.png?imageslim" alt="mark">)这个返回true,但是必须要在白名单里.本地包含肯定是不行的,本地文件里不会有木马.继续往下找(如果我疯狂上传然后疯狂传参去访问会不会可以出现?像条件竞争那样???)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/3bd8ojL8dvIO.png?imageslim" alt="mark">这个就是查找?之前的字符串返回给变量page.   Strops查找?第一次返回的位置,substr截取哪儿到哪儿.所以如果我们输入db_sql.php?/../是可以绕过白名单的但是incude里不能有?,,所以凉凉换下一个<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/adsv1scnjqgW.png?imageslim" alt="mark">这个是url解码,这里有个小知识,get传参得到的字符串是会被url解码一次的,因为发送数据包的时候会被编码一次<br>    <?php
+  $a=$_GET['a'];
+  $a = urldecode($a);
+  echo $a;
+  ?><br>  <img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/a91SXPEvD5Ux.png?imageslim" alt="mark"><br>Get传参事先解码一次把%25变成%然后urldeocde又把%27解码成’<br>这次是先解码,然后去截取匹配<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/brrMVLUJwyXz.png?imageslim" alt="mark">这样我们就可以绕过?, 写成db_sql.php%253f/../,这就是第五个条件<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/dCz9MsyKMRrJ.png?imageslim" alt="mark"></li>
+</ul>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><ul>
+<li>在index目录下传参target=db_sql.php%253f/../1.a(1.a)中式phpinfo(),这样就是本地包含了,可以直接执行phpinfo.但是服务器那边是不会有1.a的,需要自己去上传,然后再包含.<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/FJn5NqWAWzre.png?imageslim" alt="mark">)这边爆破登陆后台,发现并不可以上传文件,但是可以对数据库文件执行操作.数据库的文件是会被保存在服务器的,所以可以自己创建一个数据库,创建一个表,在里面写入一个一句话木马<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/Bb6AIlNpV493.png?imageslim" alt="mark">)点击变量,可以看到数据库的存储路径!<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/mkGnMEXMvMPv.png?imageslim" alt="mark">)这边创建了一个test库,zkaq表,里面的值是一句话木马.测试一下是否可以包含?<code>target=db_sql.php%253f/../../../../../phpStudy/MySQL/data/test/zkaq.frm&amp;a=phpinfo();</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/Llex3K0I0jbv.png?imageslim" alt="mark">)成功包含了.注;创建的zkaq表在服务器端保存得就是zkaq.frm.测试成功了,那我们就可以利用版含漏洞去写一个马.首先访问8.php(随便写的,没有这个文件就好,没有的话就去上传这个文件马)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/Oxth4VzHzoKk.png?imageslim" alt="mark">没有,然后去执行包含代码<code>target=db_sql.php%253f/../../../../../phpStudy/MySQL/data/test/zkaq.frm&amp;a=&lt;?php file_put_contents(&#39;8.php&#39;,&#39;&lt;?php @eval($_REQUEST[a])?&gt;&#39;);?&gt;;</code></li>
+<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200411/6YRLsjsYRdwD.png?imageslim" alt="mark">似乎执行成功了,访问8.php</li>
+</ul>
+
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            伏诗
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/11/%E5%BA%8F%E5%88%97%E5%8C%96%E4%BA%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-zkaq%E9%9D%B6%E5%9C%BA/">序列化于反序列化--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/11/%E5%BA%8F%E5%88%97%E5%8C%96%E4%BA%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">序列化于反序列化</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB-zkaq%E9%9D%B6%E5%9C%BA/">本地包含与远程包含--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/">本地包含与远程包含</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/11/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96-zkaq%E9%9D%B6%E5%9C%BA/">变量覆盖--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/11/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/">变量覆盖</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/09/XXE%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5/">XXE实体注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/09/XXE%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">XXE实体注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/09/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E-zkaq%E9%9D%B6%E5%9C%BA/">支付漏洞--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/09/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/">支付漏洞</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/05/CSRF/">CSRF</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/05/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/">Mssql注入--反弹注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/07/OS%E4%B9%A0%E9%A2%98-%E5%AF%B9%E5%88%86%E6%98%93%E4%BD%9C%E4%B8%9A1/">OS习题--对分易作业1</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/SSRF/">SSRF</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/03/web%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">web服务通信原理</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/03/zkaq-web%E5%AE%89%E5%85%A8%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/">zkaq--web安全前端基础</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/01/zkaq-%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">zkaq--序列化与反序列化</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/02/%E4%BD%BF%E7%94%A8%E4%B8%83%E7%89%9B%E4%BA%91%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">使用七牛云来上传图片</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/">数据库注入--Access注入</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E7%AB%AF%E6%BC%8F%E6%B4%9E-20-23-zkaq/">文件上端漏洞(20-23)--zkaq</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB-zkaq%E9%9D%B6%E5%9C%BA/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB-zkaq%E9%9D%B6%E5%9C%BA/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB-zkaq%E9%9D%B6%E5%9C%BA/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/CSRF/" style="font-size: 18.54027899213346px;" class="tag-cloud-link">CSRF</a>
+    
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 14.446203829383105px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
+    
+    <a href="/tags/Dom-Based-XSS/" style="font-size: 17.520289374189755px;" class="tag-cloud-link">Dom Based XSS</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 13.406269351681752px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 11.541743210115921px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    
+    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 18.31353410818879px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
+    
+    <a href="/tags/servlet/" style="font-size: 17.88729658760616px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 19.042312473854945px;" class="tag-cloud-link">OS习题</a>
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 19.451902105651328px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 10.131068989607503px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    
+    <a href="/tags/SQL-DDL/" style="font-size: 8.83544128154281px;" class="tag-cloud-link">SQL-DDL</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 17.485781619193656px;" class="tag-cloud-link">SQL注入--盲注</a>
+    
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 11.925212667507303px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    
+    <a href="/tags/SSRF/" style="font-size: 15.260609643647577px;" class="tag-cloud-link">SSRF</a>
+    
+    <a href="/tags/XXE/" style="font-size: 9.471627002052701px;" class="tag-cloud-link">XXE</a>
+    
+    <a href="/tags/HTTP/" style="font-size: 14.72523970440302px;" class="tag-cloud-link">HTTP</a>
+    
+    <a href="/tags/Request/" style="font-size: 12.164506963008737px;" class="tag-cloud-link">Request</a>
+    
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 10.965105404684623px;" class="tag-cloud-link">博客学习</a>
+    
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 9.206721533980923px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 12.330671041884838px;" class="tag-cloud-link">web通信原理</a>
+    
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 14.914123779330566px;" class="tag-cloud-link">web前端安全基础</a>
+    
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 16.31494449734513px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 17.71023883167514px;" class="tag-cloud-link">正则表达式</a>
+    
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 17.369791114639604px;" class="tag-cloud-link">文件上传漏洞</a>
+    
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 15.186278202832383px;" class="tag-cloud-link">序列化与反序列化</a>
+    
+    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 8.153793382928733px;" class="tag-cloud-link">反射型XSS</a>
+    
+    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 17.586495883049977px;" class="tag-cloud-link">变量覆盖</a>
+    
+    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 17.355306194999557px;" class="tag-cloud-link">存储型XSS</a>
+    
+    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 15.828861244448348px;" class="tag-cloud-link">支付漏洞</a>
+    
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 11.44325279757022px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    
+    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 11.9580274485196px;" class="tag-cloud-link">本地包含于远程包含</a>
+    
+    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 13.362945225584674px;" class="tag-cloud-link">越权</a>
+    
+    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 13.180191445734309px;" class="tag-cloud-link">验证码绕过和密码找回</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://kdays.net/days/" target="_blank">KDays Forum♂</a>
+    </li>
+    
+    <li>
+        <a href="https://lzfangwen.github.io/lzfangwen.github.io/" target="_blank">绅士斌斌♂</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.j0k3r.cn/" target="_blank">hacker_Joker♂</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/wxnsoul/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://coding.net/u/SORA1" target="_blank">Coding</a>
+    </li>
+    
+    <li>
+        <a href="https://i.csdn.net/#/uc/profile" target="_blank">CSDN</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 伏诗 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+
+<script src="/js/activate-power-mode.js"></script>
+
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+
+<script src="/js/oni.js"></script>
+
+
+
+
+</html>
