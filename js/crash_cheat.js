@@ -1,10 +1,9 @@
-
 <!--崩溃欺骗-->
  var OriginTitle = document.title;
  var titleTime;
  document.addEventListener('visibilitychange', function () {
      if (document.hidden) {
-         $('[rel="icon"]').attr('href', "https://segmentfault.com/img/TEP.ico");
+         $('[rel="icon"]').attr('href', "/img/TEP.ico");
          document.title = '╭(°A°`)╮ 页面崩溃啦 ~';
          clearTimeout(titleTime);
      }
@@ -15,3 +14,4 @@
              document.title = OriginTitle;
          }, 2000);
      }
+ });
