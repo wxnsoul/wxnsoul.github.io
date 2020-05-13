@@ -187,7 +187,7 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/Dom-Based-XSS/">Dom Based XSS</a>
+                            <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
                         </li>
                         
                         
@@ -271,7 +271,21 @@
     </div>
     <div class="content-article">
         <h1 id="测试发现"><a href="#测试发现" class="headerlink" title="测试发现"></a>测试发现</h1><ul>
-<li>进入发现这是一个聊天室,有很多很多的提交框,自然会想到<code>&lt;script&gt;alert(1)&lt;/script&gt;</code><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/8ywF7I93oUXg.png?imageslim" alt="mark">)很不幸直接被发现了<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/k7xOwg9FcXwf.png?imageslim" alt="mark">)直接被拦截了,因为cookie信息一直在所以刷新是没有用的,手动找到后删除cookie信息继续恢复正常访问<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/96WBYcF9BzC8.png?imageslim" alt="mark">然后一个一个地方试了下发现名称的地方试不可以xss的,所以被拦截<br>这里就需要使用burp了,很多前端的拦截burp就可以绕过去<br>Burp是用于寻找输出点最好的工具<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/LYJSdgJUIO9K.png?imageslim" alt="mark">)抓包把浏览器中有框框的地方全部给改成<script>alert(1)</script>传过去,但是没有什么用处,这时候就需要查看页面源代码来寻找其余可以插入的地方.<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/D8mrED6rYbFu.png?imageslim" alt="mark">)这时候发现这个您所在的位置这里很可以,可能是服务器端发送过来的,因为随便输入的数据也会跟在后面显示<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/TYfAaszESU5S.png?imageslim" alt="mark">)<br>查看页面源码,直接就是document.write写我url栏里输入的,所以这边肯定是服务器端发送过来的(如果是客户端的他不会知道我要输入啥),可以考虑尝试一下<br>直接写入不行,转native编码后绕过就可以了<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/suIjEXGAQtjU.png?imageslim" alt="mark">)接着尝试使用比较老套的绕过旧waf的方法<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/sUXKjaa1Mkqy.png?imageslim" alt="mark">)确实奏效了,只是没有注意闭合问题<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/2sK4f1rhVdiK.png?imageslim" alt="mark">)这样也不行,,最后添加上//后又被安全感拦截了<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/zJvWH3Tkav4q.png?imageslim" alt="mark">改成这样,用分号结束一段语句,最后闭合,成功弹出! <a href="http://q85br28lq.bkt.clouddn.com/blog/20200405/uENVWVDyLT2S.png?imageslim" target="_blank" rel="noopener">mark</a><br>因为已经是服务器端传来的,所以这段代码已经在数据库中变成了存储型xss,此时再在别的地方<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>就不会被拦截了,比如在字体里输入<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/yr8CaG3M30bW.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/0JiqSRLiOleM.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/MR40CwuP2U1R.png?imageslim" alt="mark">也可以这样直接闭合来输出.因为html的优先级高于js,所以两个script标签会直接先闭合,最后加上//注释符也可以,这就是html的高容差性.<br>注:<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/XONUI511jFUt.png?imageslim" alt="mark">一开始自己这么尝试的不行就是因为没有闭合标签<br>在xs.sb搭建xss代码后将恶意代码输入到地址栏,成功看到有内容访问<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/TtVxVjWqoeXi.png?imageslim" alt="mark">)看tips<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/bQ37KrGbzP3V.png?imageslim" alt="mark">根据tips去访问dom.php?url=<br><br>这其实是个模拟静态页面生成的 页面<br>将刚刚的恶意代码放在url后面,他就会去访问这个你写的网址,这时候再去访问log.html,就会加载出来刚刚访问的,这个页面里面有用py写的脚本,会去不停的访问这个dom.php?url&gt;里的页面</li>
+<li>进入发现这是一个聊天室,有很多很多的提交框,自然会想到<code>&lt;script&gt;alert(1)&lt;/script&gt;</code><img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/8ywF7I93oUXg.png?imageslim" alt="mark">)很不幸直接被发现了<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/k7xOwg9FcXwf.png?imageslim" alt="mark">)直接被拦截了,因为cookie信息一直在所以刷新是没有用的,手动找到后删除cookie信息继续恢复正常访问<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/96WBYcF9BzC8.png?imageslim" alt="mark">然后一个一个地方试了下发现名称的地方试不可以xss的,所以被拦截<br>这里就需要使用burp了,很多前端的拦截burp就可以绕过去<br>Burp是用于寻找输出点最好的工具<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/LYJSdgJUIO9K.png?imageslim" alt="mark">)抓包把浏览器中有框框的地方全部给改成<script>alert(1)</script>传过去,但是没有什么用处,这时候就需要查看页面源代码来寻找其余可以插入的地方.<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/D8mrED6rYbFu.png?imageslim" alt="mark">)这时候发现这个您所在的位置这里很可以,可能是服务器端发送过来的,因为随便输入的数据也会跟在后面显示<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/TYfAaszESU5S.png?imageslim" alt="mark">)<br>查看页面源码,直接就是document.write写我url栏里输入的,所以这边肯定是服务器端发送过来的(如果是客户端的他不会知道我要输入啥),可以考虑尝试一下<br>直接写入不行,转native编码后绕过就可以了<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/suIjEXGAQtjU.png?imageslim" alt="mark">)接着尝试使用比较老套的绕过旧waf的方法<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/sUXKjaa1Mkqy.png?imageslim" alt="mark">)确实奏效了,只是没有注意闭合问题<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/2sK4f1rhVdiK.png?imageslim" alt="mark">)这样也不行,,最后添加上//后又被安全感拦截了<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/zJvWH3Tkav4q.png?imageslim" alt="mark">改成这样,用分号结束一段语句,最后闭合,成功弹出! <a href="http://qiniuyun.wxaqlyh.cn/blog/20200405/uENVWVDyLT2S.png?imageslim" target="_blank" rel="noopener">mark</a><br>因为已经是服务器端传来的,所以这段代码已经在数据库中变成了存储型xss,此时再在别的地方<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>就不会被拦截了,比如在字体里输入<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/yr8CaG3M30bW.png?imageslim" alt="mark">)<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/0JiqSRLiOleM.png?imageslim" alt="mark">)<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/MR40CwuP2U1R.png?imageslim" alt="mark">也可以这样直接闭合来输出.因为html的优先级高于js,所以两个script标签会直接先闭合,最后加上//注释符也可以,这就是html的高容差性.<br>注:<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/XONUI511jFUt.png?imageslim" alt="mark">一开始自己这么尝试的不行就是因为没有闭合标签</li>
+</ul>
+<p>#dom based xss</p>
+<ul>
+<li>在xs.sb搭建xss代码后将恶意代码输入到地址栏,成功看到有内容访问<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/TtVxVjWqoeXi.png?imageslim" alt="mark">)看tips<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/bQ37KrGbzP3V.png?imageslim" alt="mark">根据tips去访问dom.php?url=<br><br>这是一个风哥编写的管理员自动点击页面,也就是说为了我们学生的体验,他写了这个页面假装管理员去点击,只要你提交你想要管理员访问的url,那么机器人就会去访问,从而窃取管理员cookie<br>将刚刚的恶意代码放在url后面,他就会去访问这个你写的网址,这时候再去访问log.html,就会加载出来刚刚访问的,这个页面里面有用py写的脚本,会去不停的访问这个dom.php?url=里的页面<img src="http://qiniuyun.wxaqlyh.cn/blog/20200509/tLcSrrYlns37.png?imageslim" alt="mark">log.html是一个框架标签,会去加载刚刚url中传入的地址,但是刚刚的地址又是恶意代码,所以会被窃取cookie</li>
+</ul>
+<p>#错误发现</p>
+<ul>
+<li>过了好久才知道!!那个管理员提交错误得url要填写完整的页面地址!!不是单单的一个恶意代码!!想想也是,,只是一个恶意代码他怎么打开…<img src="http://qiniuyun.wxaqlyh.cn/blog/20200513/o4T9QSNVHyK2.png?imageslim" alt="mark">)log.html是一个框架标签,会去加载刚刚url中传入的地址,但是刚刚的地址又是恶意代码,所以会被窃取cookie<img src="http://qiniuyun.wxaqlyh.cn/blog/20200513/wVpqiUE848Hm.png?imageslim" alt="mark"></li>
+</ul>
+<p>但是你刚刚访问的里面有恶意代码,所以就会被盗取cookie<br> <img src="http://qiniuyun.wxaqlyh.cn/blog/20200513/YXrlGtthYoDj.png?imageslim" alt="mark"><br>flag=zkz{x3ser-D0m}</p>
+<p>历时几个礼拜终于研究透彻并且解决了这个问题…</p>
+<p>#总结</p>
+<ul>
+<li>但其实前面得测试发现几乎最重要的就是发现url里的传参能够显示在页面上了…把我们的恶意代码架加载过去也会显示.</li>
 </ul>
 
     </div>
@@ -346,6 +360,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/05/13/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">延时注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/05/07/py%E7%88%AC%E8%99%ABday7-%E6%B7%98%E5%AE%9D%E5%95%86%E5%93%81%E4%BF%A1%E6%81%AF%E5%AE%9A%E5%90%91%E7%88%AC%E8%99%AB%E5%AE%9E%E4%BE%8B/">py爬虫day7--淘宝商品信息定向爬虫实例</a>
                 </span>
             </li>
@@ -398,12 +418,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/05/05/py%E7%88%AC%E8%99%ABday5-%E5%AF%BC%E5%AD%A6/">py爬虫day5--导学</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -422,61 +436,61 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/CSRF-zkaq%E9%9D%B6%E5%9C%BA/">CSRF--zkaq靶场</a>
+                    <a href="/2020/04/12/0day%E5%AE%A1%E8%AE%A1%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B-%E4%B8%8A/">0day审计实战案例(上)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/DNS%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">DNS注入--zkaq靶场</a>
+                    <a href="/2020/04/07/OS%E4%B9%A0%E9%A2%98-%E5%AF%B9%E5%88%86%E6%98%93%E4%BD%9C%E4%B8%9A1/">OS习题--对分易作业1</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/08/SSRF/">SSRF</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">SQL语句--连接查询</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/access%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">access注入--zkaq靶场</a>
+                    <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/">Servlet&amp;HTTP&amp;Request笔记</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/05/05/py%E7%88%AC%E8%99%ABday3-%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E5%BC%95%E5%8F%91%E7%9A%84%E5%BC%82%E5%B8%B8/">py爬虫day3--网络爬虫引发的异常</a>
+                    <a href="/2020/04/09/XXE%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">XXE实体注入--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday5-%E5%9F%BA%E4%BA%8EHTML%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E7%BC%96%E7%A0%81/">py爬虫day5--基于HTML的格式化和编码</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday5-%E7%BE%8E%E5%91%B3%E6%B1%A4/">py爬虫day5--美味汤</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/03/zkaq-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">zkaq--信息收集</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/06/zkaq%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-%E4%BA%8C/">zkaq文件上传漏洞(二)</a>
+                    <a href="/2020/04/06/zkaq%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-%E4%B8%89/">zkaq文件上传漏洞(三)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2020/04/11/%E5%BA%8F%E5%88%97%E5%8C%96%E4%BA%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-zkaq%E9%9D%B6%E5%9C%BA/">序列化于反序列化--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E7%AB%AF%E6%BC%8F%E6%B4%9E-1-10-zkaq/">文件上端漏洞(1-10)--zkaq</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/05/%E8%A7%A3%E5%86%B3tags%E5%92%8Ccategories%E7%82%B9%E5%87%BB%E5%90%8E%E9%A1%B5%E9%9D%A2%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决tags和categories点击后页面为空的问题</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/08/%E8%B6%8A%E6%9D%83/">越权</a>
                 </span>
             </li>
             
@@ -509,77 +523,79 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/0day/" style="font-size: 14.672124612631023px;" class="tag-cloud-link">0day</a>
+    <a href="/tags/0day/" style="font-size: 13.048790297366228px;" class="tag-cloud-link">0day</a>
     
-    <a href="/tags/CSRF/" style="font-size: 17.955641660993898px;" class="tag-cloud-link">CSRF</a>
+    <a href="/tags/CSRF/" style="font-size: 17.90621460075549px;" class="tag-cloud-link">CSRF</a>
     
-    <a href="/tags/Dom-Based-XSS/" style="font-size: 11.128302711263416px;" class="tag-cloud-link">Dom Based XSS</a>
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 8.404111894749107px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
     
-    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 19.8457499728497px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
+    <a href="/tags/Dom-Based-XSS/" style="font-size: 15.94878785134543px;" class="tag-cloud-link">Dom Based XSS</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 15.333141042715134px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 8.077345792194912px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 18.89152746250418px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/servlet/" style="font-size: 19.275190372427435px;" class="tag-cloud-link">servlet</a>
     
-    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 14.008982115100812px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 16.887948464796388px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
     
-    <a href="/tags/servlet/" style="font-size: 19.845814583092853px;" class="tag-cloud-link">servlet</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 8.77645926282027px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 8.160599946491764px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
+    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 8.383575408531662px;" class="tag-cloud-link">OS习题</a>
     
-    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 8.816956423452996px;" class="tag-cloud-link">OS习题</a>
+    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 19.691169570237072px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 16.7128787108091px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 11.592498886722474px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 18.370403469849357px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 14.073992068154222px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 17.34125085719899px;" class="tag-cloud-link">SQL注入--盲注</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 9.685015105302776px;" class="tag-cloud-link">SQL注入--盲注</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 18.63854785576217px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 17.474612818698944px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/SSRF/" style="font-size: 13.053147754631151px;" class="tag-cloud-link">SSRF</a>
+    <a href="/tags/SSRF/" style="font-size: 14.478190503350367px;" class="tag-cloud-link">SSRF</a>
     
-    <a href="/tags/XXE/" style="font-size: 9.251320709691196px;" class="tag-cloud-link">XXE</a>
+    <a href="/tags/HTTP/" style="font-size: 15.089277039383225px;" class="tag-cloud-link">HTTP</a>
     
-    <a href="/tags/HTTP/" style="font-size: 15.240643861004584px;" class="tag-cloud-link">HTTP</a>
+    <a href="/tags/Request/" style="font-size: 16.98591752389125px;" class="tag-cloud-link">Request</a>
     
-    <a href="/tags/Request/" style="font-size: 12.284511839761734px;" class="tag-cloud-link">Request</a>
+    <a href="/tags/XXE/" style="font-size: 19.44685820902662px;" class="tag-cloud-link">XXE</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 19.345854567967756px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 14.46220792659203px;" class="tag-cloud-link">Access注入--偏移注入</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 11.843665558339694px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 14.68550245895958px;" class="tag-cloud-link">Access注入--cookie注入</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 10.925685809659903px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 10.022086868312986px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 15.795001204325892px;" class="tag-cloud-link">爬虫</a>
+    <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 16.948872242096456px;" class="tag-cloud-link">爬虫</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 14.932869500184651px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 11.786922602035062px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 9.524348854057678px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 17.802541609385692px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 15.515130627101112px;" class="tag-cloud-link">信息收集</a>
+    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 16.302830492893573px;" class="tag-cloud-link">信息收集</a>
     
-    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 9.45901244857482px;" class="tag-cloud-link">正则表达式</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 11.427625885957394px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.901107320356058px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.81502737959906px;" class="tag-cloud-link">正则表达式</a>
     
-    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 13.19890840507071px;" class="tag-cloud-link">文件上传漏洞</a>
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 18.271782856797458px;" class="tag-cloud-link">文件上传漏洞</a>
     
-    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 9.990035069999728px;" class="tag-cloud-link">反射型XSS</a>
+    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 17.338880136703253px;" class="tag-cloud-link">反射型XSS</a>
     
-    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 17.208105807696697px;" class="tag-cloud-link">变量覆盖</a>
+    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 19.979932625984397px;" class="tag-cloud-link">变量覆盖</a>
     
-    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 19.74120056159944px;" class="tag-cloud-link">存储型XSS</a>
+    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 12.704230351102906px;" class="tag-cloud-link">存储型XSS</a>
     
-    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 13.221742131390444px;" class="tag-cloud-link">支付漏洞</a>
+    <a href="/tags/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5/" style="font-size: 14.498838045222893px;" class="tag-cloud-link">延时注入</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 15.235402669412679px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 11.849837881707973px;" class="tag-cloud-link">支付漏洞</a>
     
-    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 9.697311615804804px;" class="tag-cloud-link">本地包含于远程包含</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 8.533803693388677px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
     
-    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 10.597090056355304px;" class="tag-cloud-link">越权</a>
+    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 15.838632098294525px;" class="tag-cloud-link">本地包含于远程包含</a>
     
-    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 9.920526361093156px;" class="tag-cloud-link">验证码绕过和密码找回</a>
+    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 19.251917401213024px;" class="tag-cloud-link">越权</a>
+    
+    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 9.822535197184095px;" class="tag-cloud-link">验证码绕过和密码找回</a>
     
 </div>
                 

