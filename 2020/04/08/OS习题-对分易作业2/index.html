@@ -179,11 +179,11 @@
                         
                         
                         <li>
-                            <a href="/tags/0day/">0day</a>
+                            <a href="/tags/CSRF/">CSRF</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/CSRF/">CSRF</a>
+                            <a href="/tags/0day/">0day</a>
                         </li>
                         
                         <li>
@@ -271,7 +271,7 @@
     </div>
     <div class="content-article">
         <h1 id="第一题"><a href="#第一题" class="headerlink" title="第一题"></a>第一题</h1><ul>
-<li>1、根据以下条件，分别利用FCFS、SPF、HRN、RR（时间片0.2）给出前三种种算法的进程调度顺序，计算每种算法中每个进程的周转时间、带权周转时间以及系统的平均周转时间、平均带权周转时间。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/UMzIoDlUUL3N.png?imageslim" alt="mark"><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/QQaO4RmzrcrK.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/N6GR6N6w9fvP.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/ODfPYjh8dj3f.png?imageslim" alt="mark"><br>了解这几个概念就好:<br>周转时间=程序最初结束时间-程序提交时间<br>带权周转时间=周转时间/执行时间<br>平均周转时间=所有作业周转时间之和/作业数量<br>平均带权周转时间=所有作业带权周转时间之和/作业数量<br>
+<li>1、根据以下条件，分别利用FCFS、SPF、HRN、RR（时间片0.2）给出前三种种算法的进程调度顺序，计算每种算法中每个进程的周转时间、带权周转时间以及系统的平均周转时间、平均带权周转时间。<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/UMzIoDlUUL3N.png?imageslim" alt="mark"><br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/QQaO4RmzrcrK.png?imageslim" alt="mark">)<img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/N6GR6N6w9fvP.png?imageslim" alt="mark">)<img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/ODfPYjh8dj3f.png?imageslim" alt="mark"><br>了解这几个概念就好:<br>周转时间=程序最初结束时间-程序提交时间<br>带权周转时间=周转时间/执行时间<br>平均周转时间=所有作业周转时间之和/作业数量<br>平均带权周转时间=所有作业带权周转时间之和/作业数量<br>
 FCFS:先来先服务,就是谁先来就先执行谁,所以顺序是1234<br>
 SPF:短作业优先算法:在当前有的作业里面选择执行时间最短的那个.8.00只有1,先执行1到9.00.那是有2,3,先执行3.然后9.10只有2,执行2.最后执行4所以是1324<br>
 HRN:高度相应比算法.求相应比,相应比高的优先执行.相应比=[(目前时间-提交时间)/执行时间]+1<br>上题中,先进行作业1到九点,此时作业2的相应比:(9-8.5)/0.5+1=2;作业3=(9-9)/0.1+1=1;限制性作业2到9.50.此时作业3相应比:(9.50-9.00)/0.1+1=6.作业4:(9.50-9.2)/0.2+1=2.5所以先执行3,所以顺序是1234<br>时间片轮转法就是按照我画的图来做的,这个应该比较记得清楚,毕竟自己做的.需要注意几个地方:<br><font color="red">1.执行完一个时间片之后若没执行完,此时新加入一个,那么应当排在新加入的后面<br>2.如果时间片执行一半就执行完了,另一半不会空等着而是将下一个继续塞入剩下的半个时间片里</font>
@@ -282,10 +282,10 @@ HRN:高度相应比算法.求相应比,相应比高的优先执行.相应比=[(�
 <li>2、根据以下条件，利用RR（时间片q=2）进行进程调度，画出进程调度时间序列图，并计算每个进程的周转时间、带权周转时间以及系统的平均周转时间和平均带权周转时间。</li>
 </ul>
 <h1 id="第三题"><a href="#第三题" class="headerlink" title="第三题"></a>第三题</h1><ul>
-<li>3.利用记录型信号量写出不会发生死锁的五位哲学家就餐的程序。<br><br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/XVRUyrb4Uj7m.png?imageslim" alt="mark">和第一次作业一样<h1 id="第四题"><a href="#第四题" class="headerlink" title="第四题"></a>第四题</h1></li>
-<li>4、利用记录型信号量实现前趋图。<br><img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/Lt2MQtMPrLRK.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/vbFk4xs992Tm.png?imageslim" alt="mark">和第一次作业一样<h1 id="第五题"><a href="#第五题" class="headerlink" title="第五题"></a>第五题</h1></li>
-<li>5、三个进程P1、P2、P3互斥使用一个包含N(N&gt;0)个单元的缓冲区。P1每次用put()将一个正整数送入缓冲区的一个单元中，P2每次用getodd()从缓冲区中取出一个奇数，P3每次用geteven()从缓冲区中取出一个偶数。试用信号量机制实现这三个进程的互斥与同步活动，用伪代码实现。 <img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/0vTE9dhfKTRh.png?imageslim" alt="mark">就是写程序,定义变量,函数.注意细节就好,比如说p1里对empty只有p操作,v操作应当在p2或者p3里<h1 id="第六题"><a href="#第六题" class="headerlink" title="第六题"></a>第六题</h1></li>
-<li>6、桌子上有一只盘子，每次只能向其中放入一只水果。爸爸专向盘子中放苹果，妈妈专向盘子中放桔子，儿子专等吃盘子中的桔子，女儿专等吃盘子中的苹果。试用信号量机制实现这4个进程的互斥与同步活动，用伪代码实现<img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/60nkR37cfVmS.png?imageslim" alt="mark">)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200408/g73htd8PEmku.png?imageslim" alt="mark"></li>
+<li>3.利用记录型信号量写出不会发生死锁的五位哲学家就餐的程序。<br><br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/XVRUyrb4Uj7m.png?imageslim" alt="mark">和第一次作业一样<h1 id="第四题"><a href="#第四题" class="headerlink" title="第四题"></a>第四题</h1></li>
+<li>4、利用记录型信号量实现前趋图。<br><img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/Lt2MQtMPrLRK.png?imageslim" alt="mark">)<img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/vbFk4xs992Tm.png?imageslim" alt="mark">和第一次作业一样<h1 id="第五题"><a href="#第五题" class="headerlink" title="第五题"></a>第五题</h1></li>
+<li>5、三个进程P1、P2、P3互斥使用一个包含N(N&gt;0)个单元的缓冲区。P1每次用put()将一个正整数送入缓冲区的一个单元中，P2每次用getodd()从缓冲区中取出一个奇数，P3每次用geteven()从缓冲区中取出一个偶数。试用信号量机制实现这三个进程的互斥与同步活动，用伪代码实现。 <img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/0vTE9dhfKTRh.png?imageslim" alt="mark">就是写程序,定义变量,函数.注意细节就好,比如说p1里对empty只有p操作,v操作应当在p2或者p3里<h1 id="第六题"><a href="#第六题" class="headerlink" title="第六题"></a>第六题</h1></li>
+<li>6、桌子上有一只盘子，每次只能向其中放入一只水果。爸爸专向盘子中放苹果，妈妈专向盘子中放桔子，儿子专等吃盘子中的桔子，女儿专等吃盘子中的苹果。试用信号量机制实现这4个进程的互斥与同步活动，用伪代码实现<img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/60nkR37cfVmS.png?imageslim" alt="mark">)<img src="http://qiniuyun.wxaqlyh.cn/blog/20200408/g73htd8PEmku.png?imageslim" alt="mark"></li>
 </ul>
 
     </div>
@@ -436,61 +436,61 @@ HRN:高度相应比算法.求相应比,相应比高的优先执行.相应比=[(�
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2020/04/12/0day%E5%AE%A1%E8%AE%A1%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B-%E4%B8%8A/">0day审计实战案例(上)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/03/Get%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">Get注入--zkaq靶场</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2020/04/04/HEAD%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">POST注入--zkaq靶场</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/">SQL注入--盲注</a>
+                    <a href="/2020/04/03/SQL%E6%B3%A8%E5%85%A5-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8AGet%E6%B3%A8%E5%85%A5/">SQL注入--原理分析以及Get注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
+                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E7%A9%BA%E5%80%BC%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86/">SQL语句--空值及其处理</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/05/access%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA2/">access注入--zkaq靶场2</a>
+                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday5-%E5%9F%BA%E4%BA%8EHTML%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E7%BC%96%E7%A0%81/">py爬虫day5--基于HTML的格式化和编码</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday6-%E4%BF%A1%E6%81%AF%E6%A0%87%E8%AE%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E5%BD%A2%E5%BC%8F/">py爬虫day6--信息标记的三种形式</a>
+                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday5-%E7%BE%8E%E5%91%B3%E6%B1%A4/">py爬虫day5--美味汤</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB-zkaq%E9%9D%B6%E5%9C%BA/">本地包含与远程包含--zkaq靶场</a>
+                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday6-%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%96%B9%E6%B3%95/">py爬虫day6--信息提取的一般方法</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/%E7%9B%B2%E6%B3%A8-zkaq%E9%9D%B6%E5%9C%BA/">盲注--zkaq靶场</a>
+                    <a href="/2020/05/07/py%E7%88%AC%E8%99%ABday7-re%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/">py爬虫day7--re库的使用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/">本地包含与远程包含</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/05/%E8%A7%A3%E5%86%B3tags%E5%92%8Ccategories%E7%82%B9%E5%87%BB%E5%90%8E%E9%A1%B5%E9%9D%A2%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决tags和categories点击后页面为空的问题</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/07/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E4%B8%8E%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/">验证码绕过与密码找回</a>
+                    <a href="/2020/04/11/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/">变量覆盖</a>
                 </span>
             </li>
             
@@ -523,79 +523,79 @@ HRN:高度相应比算法.求相应比,相应比高的优先执行.相应比=[(�
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/0day/" style="font-size: 12.99794883761873px;" class="tag-cloud-link">0day</a>
+    <a href="/tags/CSRF/" style="font-size: 15.183690673873295px;" class="tag-cloud-link">CSRF</a>
     
-    <a href="/tags/CSRF/" style="font-size: 14.433991071875983px;" class="tag-cloud-link">CSRF</a>
+    <a href="/tags/0day/" style="font-size: 18.35020880275036px;" class="tag-cloud-link">0day</a>
     
-    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 8.233728269843217px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 8.147799409921895px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
     
-    <a href="/tags/Dom-Based-XSS/" style="font-size: 13.894741448557358px;" class="tag-cloud-link">Dom Based XSS</a>
+    <a href="/tags/Dom-Based-XSS/" style="font-size: 8.06817226831468px;" class="tag-cloud-link">Dom Based XSS</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 14.818485604382726px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 12.14430239550802px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/servlet/" style="font-size: 9.383878148332514px;" class="tag-cloud-link">servlet</a>
+    <a href="/tags/servlet/" style="font-size: 12.933814319001437px;" class="tag-cloud-link">servlet</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 12.055116443584264px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
+    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 15.679077969739136px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 18.707615402057222px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 8.743158966054438px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 19.951610513564834px;" class="tag-cloud-link">OS习题</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 16.496596000847596px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
     
-    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 16.517952944204175px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
+    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 14.07078776008376px;" class="tag-cloud-link">OS习题</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 13.976495557916348px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 10.279706025772615px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 15.268429259477806px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 8.268452223046285px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 11.573661790966995px;" class="tag-cloud-link">SQL注入--盲注</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 9.791665660934978px;" class="tag-cloud-link">SQL注入--盲注</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 10.473352752277012px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 14.904161487480952px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/SSRF/" style="font-size: 13.38242107353758px;" class="tag-cloud-link">SSRF</a>
+    <a href="/tags/SSRF/" style="font-size: 19.11958648418443px;" class="tag-cloud-link">SSRF</a>
     
-    <a href="/tags/HTTP/" style="font-size: 11.725508265667726px;" class="tag-cloud-link">HTTP</a>
+    <a href="/tags/HTTP/" style="font-size: 16.388301561877935px;" class="tag-cloud-link">HTTP</a>
     
-    <a href="/tags/Request/" style="font-size: 14.99374865331932px;" class="tag-cloud-link">Request</a>
+    <a href="/tags/Request/" style="font-size: 9.944806762365491px;" class="tag-cloud-link">Request</a>
     
-    <a href="/tags/XXE/" style="font-size: 8.724609612870374px;" class="tag-cloud-link">XXE</a>
+    <a href="/tags/XXE/" style="font-size: 14.742943400559673px;" class="tag-cloud-link">XXE</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 12.585763429690601px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 18.08380905760879px;" class="tag-cloud-link">Access注入--cookie注入</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 16.081627026872518px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 19.90163609270421px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 13.755076003131471px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 15.495421944866635px;" class="tag-cloud-link">Access注入--偏移注入</a>
     
-    <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 17.780943427377082px;" class="tag-cloud-link">爬虫</a>
+    <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 17.585237524388816px;" class="tag-cloud-link">爬虫</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 13.21816077774934px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 15.284907987072899px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 12.990071536364933px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 10.41980942640302px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 11.10127059590344px;" class="tag-cloud-link">信息收集</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 8.674927688563262px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 9.402063193010699px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 8.934467573200191px;" class="tag-cloud-link">正则表达式</a>
     
-    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 8.902585933944714px;" class="tag-cloud-link">正则表达式</a>
+    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 13.786053278867634px;" class="tag-cloud-link">信息收集</a>
     
-    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 17.932314201982486px;" class="tag-cloud-link">文件上传漏洞</a>
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 19.443673532253676px;" class="tag-cloud-link">文件上传漏洞</a>
     
-    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 16.899965033849046px;" class="tag-cloud-link">反射型XSS</a>
+    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 12.881272655478053px;" class="tag-cloud-link">反射型XSS</a>
     
-    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 11.528481215995289px;" class="tag-cloud-link">变量覆盖</a>
+    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 11.948401616250191px;" class="tag-cloud-link">变量覆盖</a>
     
-    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 11.156039777091209px;" class="tag-cloud-link">存储型XSS</a>
+    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 8.0550507151079px;" class="tag-cloud-link">存储型XSS</a>
     
-    <a href="/tags/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5/" style="font-size: 10.030657011550385px;" class="tag-cloud-link">延时注入</a>
+    <a href="/tags/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5/" style="font-size: 9.158651785709761px;" class="tag-cloud-link">延时注入</a>
     
-    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 9.223375481304323px;" class="tag-cloud-link">支付漏洞</a>
+    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 10.267197842387173px;" class="tag-cloud-link">支付漏洞</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 13.419817821097396px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 11.589532936782899px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
     
-    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 16.398538380916225px;" class="tag-cloud-link">本地包含于远程包含</a>
+    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 17.54526765329304px;" class="tag-cloud-link">本地包含于远程包含</a>
     
-    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 9.31063297721172px;" class="tag-cloud-link">越权</a>
+    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 19.429532704318166px;" class="tag-cloud-link">越权</a>
     
-    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 19.49336342850559px;" class="tag-cloud-link">验证码绕过和密码找回</a>
+    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 15.511765376906853px;" class="tag-cloud-link">验证码绕过和密码找回</a>
     
 </div>
                 

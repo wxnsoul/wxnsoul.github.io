@@ -179,11 +179,11 @@
                         
                         
                         <li>
-                            <a href="/tags/0day/">0day</a>
+                            <a href="/tags/CSRF/">CSRF</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/CSRF/">CSRF</a>
+                            <a href="/tags/0day/">0day</a>
                         </li>
                         
                         <li>
@@ -287,9 +287,9 @@
 <li>csrf再src平台上可能会被定为小危险,然后不给你钱,自己再偷偷修复???</li>
 </ol>
 <h1 id="测试csrf流程"><a href="#测试csrf流程" class="headerlink" title="测试csrf流程"></a>测试csrf流程</h1><ol>
-<li>先注册一个账号,然后抓取数据包,burp里有一个<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/yGoPWafui9pM.png?imageslim" alt="mark">这个功能可以直接制作带有csrf的html代码,然后保存成html文件.</li>
+<li>先注册一个账号,然后抓取数据包,burp里有一个<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/yGoPWafui9pM.png?imageslim" alt="mark">这个功能可以直接制作带有csrf的html代码,然后保存成html文件.</li>
 <li>再注册一个账号,此时去打开刚刚保存的html文件,如果刷新第二个账号后发现内容发生了变化则说明存在有scrf漏洞</li>
-<li>其实burp害怕黑客去去攻击别人所以做的比较柔和,需要点击才会触发,但是把点击事件去掉,改成直接调用函数(如下图)就变成了自动触发(恶意代码是被封装在一个js函数里的)<img src="http://q85br28lq.bkt.clouddn.com/blog/20200405/Ued7yxy5nSz7.png?imageslim" alt="mark"></li>
+<li>其实burp害怕黑客去去攻击别人所以做的比较柔和,需要点击才会触发,但是把点击事件去掉,改成直接调用函数(如下图)就变成了自动触发(恶意代码是被封装在一个js函数里的)<img src="http://qiniuyun.wxaqlyh.cn/blog/20200405/Ued7yxy5nSz7.png?imageslim" alt="mark"></li>
 </ol>
 <h1 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h1><ul>
 <li>为啥执行了phpinfo之后就说取得了webshell?<br>因为phpinfo是代码,不是系统命令.而取得了webshell之后是可以执行php代码的,所以说如果可以执行phpinfo就可是getshell了</li>
@@ -446,19 +446,7 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/03/Get%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">Get注入--zkaq靶场</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/05/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/">Mssql注入--反弹注入</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2020/04/02/SQL%E8%AF%AD%E5%8F%A5-%E5%AD%90%E6%9F%A5%E8%AF%A2/">SQL语句--子查询</a>
+                    <a href="/2020/04/04/HEAD%E6%B3%A8%E5%85%A5-zkaq%E9%9D%B6%E5%9C%BA/">POST注入--zkaq靶场</a>
                 </span>
             </li>
             
@@ -470,13 +458,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/09/Servlet&HTTP&Request%E7%AC%94%E8%AE%B0/">Servlet&amp;HTTP&amp;Request笔记</a>
+                    <a href="/2020/04/09/XXE%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5/">XXE实体注入</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/05/05/py%E7%88%AC%E8%99%ABday4-%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98/">py爬虫day4--网络爬虫实战</a>
+                    <a href="/2020/05/04/py%E7%88%AC%E8%99%ABday2/">py爬虫day2</a>
                 </span>
             </li>
             
@@ -488,19 +476,31 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday6-%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%96%B9%E6%B3%95/">py爬虫day6--信息提取的一般方法</a>
+                    <a href="/2020/05/07/py%E7%88%AC%E8%99%ABday7-re%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/">py爬虫day7--re库的使用</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5/">数据库注入--Access注入</a>
+                    <a href="/2020/05/06/py%E7%88%AC%E8%99%ABday6-%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E6%8E%92%E5%90%8D%E5%AE%9A%E5%90%91%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98/">py爬虫day6--中国大学排名定向爬虫实战</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2020/04/11/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB-zkaq%E9%9D%B6%E5%9C%BA/">本地包含与远程包含--zkaq靶场</a>
+                    <a href="/2020/05/07/py%E7%88%AC%E8%99%ABday7-%E6%B7%98%E5%AE%9D%E5%95%86%E5%93%81%E4%BF%A1%E6%81%AF%E5%AE%9A%E5%90%91%E7%88%AC%E8%99%AB%E5%AE%9E%E4%BE%8B/">py爬虫day7--淘宝商品信息定向爬虫实例</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/11/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/">变量覆盖</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2020/04/11/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96-zkaq%E9%9D%B6%E5%9C%BA/">变量覆盖--zkaq靶场</a>
                 </span>
             </li>
             
@@ -533,79 +533,79 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/0day/" style="font-size: 16.58832243004351px;" class="tag-cloud-link">0day</a>
+    <a href="/tags/CSRF/" style="font-size: 10.872464807336979px;" class="tag-cloud-link">CSRF</a>
     
-    <a href="/tags/CSRF/" style="font-size: 16.96303170198053px;" class="tag-cloud-link">CSRF</a>
+    <a href="/tags/0day/" style="font-size: 14.47340742098972px;" class="tag-cloud-link">0day</a>
     
-    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 11.296102007749866px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
+    <a href="/tags/Mysql%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5/" style="font-size: 17.1978561174206px;" class="tag-cloud-link">Mysql注入--DNS注入</a>
     
-    <a href="/tags/Dom-Based-XSS/" style="font-size: 13.982228079669849px;" class="tag-cloud-link">Dom Based XSS</a>
+    <a href="/tags/Dom-Based-XSS/" style="font-size: 18.30111539666723px;" class="tag-cloud-link">Dom Based XSS</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 19.31025140282119px;" class="tag-cloud-link">SQL注入--Get注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-Get%E6%B3%A8%E5%85%A5/" style="font-size: 13.623211011626905px;" class="tag-cloud-link">SQL注入--Get注入</a>
     
-    <a href="/tags/servlet/" style="font-size: 13.281333914884629px;" class="tag-cloud-link">servlet</a>
+    <a href="/tags/servlet/" style="font-size: 15.148387724243113px;" class="tag-cloud-link">servlet</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 11.343650020919572px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
+    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 8.39660345009286px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 8.422524804167711px;" class="tag-cloud-link">SQL注入--POST注入</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-POST%E6%B3%A8%E5%85%A5/" style="font-size: 13.368257358085291px;" class="tag-cloud-link">SQL注入--POST注入</a>
     
-    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 16.92369070667404px;" class="tag-cloud-link">OS习题</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-DNS%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 8.009592265453499px;" class="tag-cloud-link">数据库注入--DNS注入原理</a>
     
-    <a href="/tags/Mssql%E6%B3%A8%E5%85%A5-%E5%8F%8D%E5%BC%B9%E6%B3%A8%E5%85%A5/" style="font-size: 16.04836956931616px;" class="tag-cloud-link">Mssql注入--反弹注入</a>
+    <a href="/tags/OS%E4%B9%A0%E9%A2%98/" style="font-size: 15.364816574413995px;" class="tag-cloud-link">OS习题</a>
     
-    <a href="/tags/SQL-DDL/" style="font-size: 19.82156761664554px;" class="tag-cloud-link">SQL-DDL</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 8.812670062292725px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-HEAD%E6%B3%A8%E5%85%A5/" style="font-size: 19.706484902989732px;" class="tag-cloud-link">SQL注入--HEAD注入</a>
+    <a href="/tags/SQL-DDL/" style="font-size: 14.792045753523567px;" class="tag-cloud-link">SQL-DDL</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 17.16828790739738px;" class="tag-cloud-link">SQL注入--盲注</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" style="font-size: 17.47038263677575px;" class="tag-cloud-link">SQL注入--盲注</a>
     
-    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 14.192214598145307px;" class="tag-cloud-link">SQL注入绕过姿势</a>
+    <a href="/tags/SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" style="font-size: 14.743748425638522px;" class="tag-cloud-link">SQL注入绕过姿势</a>
     
-    <a href="/tags/SSRF/" style="font-size: 8.777437696830223px;" class="tag-cloud-link">SSRF</a>
+    <a href="/tags/SSRF/" style="font-size: 8.646110937647624px;" class="tag-cloud-link">SSRF</a>
     
-    <a href="/tags/HTTP/" style="font-size: 19.987927082160006px;" class="tag-cloud-link">HTTP</a>
+    <a href="/tags/HTTP/" style="font-size: 13.554308349692505px;" class="tag-cloud-link">HTTP</a>
     
-    <a href="/tags/Request/" style="font-size: 10.635828743120026px;" class="tag-cloud-link">Request</a>
+    <a href="/tags/Request/" style="font-size: 12.357960443766524px;" class="tag-cloud-link">Request</a>
     
-    <a href="/tags/XXE/" style="font-size: 15.795618603715221px;" class="tag-cloud-link">XXE</a>
+    <a href="/tags/XXE/" style="font-size: 18.123108849513276px;" class="tag-cloud-link">XXE</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 19.875706273163306px;" class="tag-cloud-link">Access注入--偏移注入</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 9.564727305016445px;" class="tag-cloud-link">Access注入--cookie注入</a>
     
-    <a href="/tags/Access%E6%B3%A8%E5%85%A5-cookie%E6%B3%A8%E5%85%A5/" style="font-size: 17.63128126251342px;" class="tag-cloud-link">Access注入--cookie注入</a>
+    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 12.425242414416179px;" class="tag-cloud-link">博客学习</a>
     
-    <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/" style="font-size: 9.832140575528275px;" class="tag-cloud-link">博客学习</a>
+    <a href="/tags/Access%E6%B3%A8%E5%85%A5-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" style="font-size: 19.181915619646816px;" class="tag-cloud-link">Access注入--偏移注入</a>
     
-    <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 18.82673461327023px;" class="tag-cloud-link">爬虫</a>
+    <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 14.643847808290353px;" class="tag-cloud-link">爬虫</a>
     
-    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 18.326851056732842px;" class="tag-cloud-link">web通信原理</a>
+    <a href="/tags/web%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/" style="font-size: 13.289220444299822px;" class="tag-cloud-link">web通信原理</a>
     
-    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 9.660420562243313px;" class="tag-cloud-link">web前端安全基础</a>
+    <a href="/tags/web%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/" style="font-size: 13.200161804572799px;" class="tag-cloud-link">web前端安全基础</a>
     
-    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 8.702561299525579px;" class="tag-cloud-link">信息收集</a>
+    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13.526926166295551px;" class="tag-cloud-link">序列化与反序列化</a>
     
-    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 18.55344076100799px;" class="tag-cloud-link">序列化与反序列化</a>
+    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 11.068022756591816px;" class="tag-cloud-link">正则表达式</a>
     
-    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 12.4464912769438px;" class="tag-cloud-link">正则表达式</a>
+    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" style="font-size: 9.093214235008741px;" class="tag-cloud-link">信息收集</a>
     
-    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 12.13846240766948px;" class="tag-cloud-link">文件上传漏洞</a>
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" style="font-size: 16.55906469028964px;" class="tag-cloud-link">文件上传漏洞</a>
     
-    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 18.51094756272956px;" class="tag-cloud-link">反射型XSS</a>
+    <a href="/tags/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS/" style="font-size: 12.523899204723886px;" class="tag-cloud-link">反射型XSS</a>
     
-    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 10.424619025340837px;" class="tag-cloud-link">变量覆盖</a>
+    <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 13.639062902055574px;" class="tag-cloud-link">变量覆盖</a>
     
-    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 12.196968373152345px;" class="tag-cloud-link">存储型XSS</a>
+    <a href="/tags/%E5%AD%98%E5%82%A8%E5%9E%8BXSS/" style="font-size: 9.332900550009413px;" class="tag-cloud-link">存储型XSS</a>
     
-    <a href="/tags/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5/" style="font-size: 12.6697388236556px;" class="tag-cloud-link">延时注入</a>
+    <a href="/tags/%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5/" style="font-size: 11.793809708953788px;" class="tag-cloud-link">延时注入</a>
     
-    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 10.02343425845949px;" class="tag-cloud-link">支付漏洞</a>
+    <a href="/tags/%E6%94%AF%E4%BB%98%E6%BC%8F%E6%B4%9E/" style="font-size: 10.20139892285689px;" class="tag-cloud-link">支付漏洞</a>
     
-    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 16.047056036728033px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
+    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5-Access%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86/" style="font-size: 10.146932116701269px;" class="tag-cloud-link">数据库注入--Access注入原理</a>
     
-    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 10.385317368715071px;" class="tag-cloud-link">本地包含于远程包含</a>
+    <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%8C%85%E5%90%AB%E4%BA%8E%E8%BF%9C%E7%A8%8B%E5%8C%85%E5%90%AB/" style="font-size: 13.41332927486892px;" class="tag-cloud-link">本地包含于远程包含</a>
     
-    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 11.489794004112383px;" class="tag-cloud-link">越权</a>
+    <a href="/tags/%E8%B6%8A%E6%9D%83/" style="font-size: 10.18755021752968px;" class="tag-cloud-link">越权</a>
     
-    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 12.007616776607115px;" class="tag-cloud-link">验证码绕过和密码找回</a>
+    <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87%E5%92%8C%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E/" style="font-size: 9.908287227493876px;" class="tag-cloud-link">验证码绕过和密码找回</a>
     
 </div>
                 
